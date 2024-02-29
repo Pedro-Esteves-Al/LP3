@@ -1,7 +1,6 @@
 package pedro.joao.scfcapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class Veiculo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String modelo;
     private String placa;
 
-    @ManyToOne
+   /* @ManyToOne
     private Categoria categoria;
     @ManyToOne
-    private Instrutor instrutor;
+    private Instrutor instrutor;*/
 }

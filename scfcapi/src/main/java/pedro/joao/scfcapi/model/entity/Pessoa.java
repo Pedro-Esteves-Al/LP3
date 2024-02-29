@@ -1,9 +1,6 @@
 package pedro.joao.scfcapi.model.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +12,9 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 
 public abstract class  Pessoa {
-    //@Id
-    //@GeneratedValue(strategy = GerenerationType.INDEX);
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     private String nome;
     private String email;

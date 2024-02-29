@@ -1,7 +1,6 @@
 package pedro.joao.scfcapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 
 public class Simulado {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private LocalDate dataSimulado;
     private LocalTime horarioSimulado;
 }

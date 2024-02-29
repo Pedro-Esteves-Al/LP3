@@ -21,6 +21,6 @@ public class Contrato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String numero;
-    private Date dataInicio;
+    private LocalDate dataInicio;
     private LocalDate dataFim;
 }

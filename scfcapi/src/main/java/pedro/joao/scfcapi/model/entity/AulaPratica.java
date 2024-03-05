@@ -20,10 +20,10 @@ public class AulaPratica {
     private LocalDate dataAulaPratica;
     private LocalTime horarioAulaPratica;
 
-    /*@ManyToOne
+    @ManyToOne
     private Instrutor instrutor;
     @ManyToOne
     private Veiculo veiculo;
     @ManyToOne
-    private Categoria categoria;*/
+    private Categoria categoria;
 }

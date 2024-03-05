@@ -1,9 +1,6 @@
 package pedro.joao.scfcapi.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +20,6 @@ public class Contrato {
     private String numero;
     private LocalDate dataInicio;
     private LocalDate dataFim;
+    @ManyToOne
+    private Aluno aluno;
 }

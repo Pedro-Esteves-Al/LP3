@@ -20,6 +20,6 @@ public class AulaTeorica {
     private LocalDate dataAulaTeorica;
     private LocalTime horarioAulaTeorica;
 
-    //@ManyToOne
-    //private Instrutor instrutor;
+    @ManyToOne
+    private Instrutor instrutor;
 }

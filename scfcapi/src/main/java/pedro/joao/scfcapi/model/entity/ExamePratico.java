@@ -19,10 +19,4 @@ public class ExamePratico {
     private LocalDate dataExamePratico;
     private LocalTime horarioExamePratico;
     private String local;
-   /* @ManyToOne
-    private Instrutor instrutor;
-    @ManyToOne
-    private Veiculo veiculo;
-    @ManyToOne
-    private Categoria categoria;*/
 }

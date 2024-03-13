@@ -1,6 +1,6 @@
-package pedro.joao.scfcapi.model.exception;
+package pedro.joao.scfcapi.exception;
 
-public class RegraNegocioException extends RunTimeException{
+public class RegraNegocioException extends RuntimeException{
 
     public RegraNegocioException(String msg){
         super(msg);

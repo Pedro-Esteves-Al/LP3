@@ -3,6 +3,8 @@ package pedro.joao.scfcapi.api.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+import pedro.joao.scfcapi.model.entity.Instrutor;
 
 @Data
 @NoArgsConstructor
@@ -22,5 +24,10 @@ public class InstrutorDTO {
     private String cep;
     private String cnh;
     private String clt;
-    private Long examePraticoId;
+
+    public static InstrutorDTO create(Instrutor instrutor) {
+        ModelMapper modelMapper = new ModelMapper();
+        InstrutorDTO dto = modelMapper.map(instrutor, InstrutorDTO.class);
+        return dto;
+    }
 }

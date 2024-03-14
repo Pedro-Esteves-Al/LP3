@@ -16,6 +16,7 @@ public class Aluno extends Pessoa{
     private boolean aprovadoExamePratico;
     @ManyToOne
     private ExamePratico examePratico;
-    @ManyToOne ExameTeorico exameTeorico;
+    @ManyToOne
+    private ExameTeorico exameTeorico;
 
 }

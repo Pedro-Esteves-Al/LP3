@@ -16,10 +16,4 @@ public class Categoria {
     private Long Id;
     private String tipo;
 
-    @ManyToOne
-    private Veiculo veiculo;
-    @ManyToOne
-    private ExamePratico examePratico;
-    @ManyToOne
-    private ExameTeorico exameTeorico;
 }

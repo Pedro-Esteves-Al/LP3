@@ -3,6 +3,8 @@ package pedro.joao.scfcapi.api.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+import pedro.joao.scfcapi.model.entity.Aluno;
 
 import java.time.LocalDate;
 
@@ -24,8 +26,11 @@ public class AlunoDTO {
     private String cep;
     private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;
-    private Long idContrato;
-    private String numeroContrato;
-    private LocalDate dataInicioContrato;
-    private LocalDate dataFimContrato;
+
+
+    public static AlunoDTO create(Aluno aluno) {
+        ModelMapper modelMapper = new ModelMapper();
+        AlunoDTO dto = modelMapper.map(aluno, AlunoDTO.class);
+        return dto;
+    }
 }

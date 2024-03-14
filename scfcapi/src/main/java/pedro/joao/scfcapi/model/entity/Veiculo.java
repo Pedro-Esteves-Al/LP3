@@ -20,5 +20,5 @@ public class Veiculo {
    @ManyToOne
    private Instrutor instrutor;
     @ManyToOne
-    private ExamePratico examePratico;
+    private Categoria categoria;
 }

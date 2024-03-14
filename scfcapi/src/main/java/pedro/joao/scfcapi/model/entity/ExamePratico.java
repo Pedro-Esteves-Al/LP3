@@ -18,5 +18,12 @@ public class ExamePratico {
     private Long Id;
     private LocalDate dataExamePratico;
     private LocalTime horarioExamePratico;
-    private String local;
+
+
+    @ManyToOne
+    private Categoria categoria;
+    @ManyToOne
+    private Instrutor instrutor;
+    @ManyToOne
+    private Veiculo veiculo;
 }

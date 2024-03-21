@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pedro.joao.scfcapi.model.entity.ExamePratico;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,8 @@ public class AlunoController {
 
     public Aluno converter(AlunoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Aluno.class);
+        Aluno aluno = modelMapper.map(dto,Aluno.class);
+        //if (dto.)
+        return aluno;
     }
 }

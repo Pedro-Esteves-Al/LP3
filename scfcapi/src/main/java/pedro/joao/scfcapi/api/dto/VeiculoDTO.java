@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
-import pedro.joao.scfcapi.model.entity.Aluno;
 import pedro.joao.scfcapi.model.entity.Veiculo;
 
 @Data

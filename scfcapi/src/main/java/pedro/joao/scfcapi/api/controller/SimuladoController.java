@@ -21,6 +21,7 @@ public class SimuladoController {
     
     public Simulado converter(SimuladoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Simulado.class);
+        Simulado simulado = modelMapper.map(dto, Simulado.class);
+        return simulado;
     }
 }

@@ -26,6 +26,9 @@ public class AlunoDTO {
     private String cep;
     private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;
+    private Long exame_pratico_id;
+    private Long exame_teorico_id;
+
 
 
     public static AlunoDTO create(Aluno aluno) {

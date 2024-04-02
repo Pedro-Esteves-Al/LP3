@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class Veiculo {
-    @ Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String modelo;
     private String placa;
 
-   @ManyToOne
-   private Instrutor instrutor;
+    @ManyToOne
+    private Instrutor instrutor;
     @ManyToOne
     private Categoria categoria;
 }

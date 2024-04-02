@@ -3,6 +3,9 @@ package pedro.joao.scfcapi.api.controller;
 import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.AulaTeorica;
+import pedro.joao.scfcapi.model.entity.Instrutor;
+import pedro.joao.scfcapi.service.AulaTeoricaService;
+import pedro.joao.scfcapi.service.InstrutorService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,9 +21,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 
 public class AulaTeoricaController {
+    private final AulaTeoricaService service;
+    private final InstrutorService instrutorService;
 
     public AulaTeorica converter(AulaTeoricaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, AulaTeorica.class);
+        AulaTeorica aulaTeorica = modelMapper.map(dto, AulaTeorica.class);
+        if (dto.getIdInstrutor() != null) {
+            Optional<Instrutor> instrutor = instrutorService.getInstrutorById(dto.getIdInstrutor());
+            if (!instrutor.isPresent()) {
+                aulaTeorica.setInstrutor(null);
+            } else {
+                aulaTeorica.setInstrutor(instrutor.get());
+            }
+        }
+        return aulaTeorica;
     }
 }

@@ -2,7 +2,10 @@ package pedro.joao.scfcapi.api.controller;
 
 import pedro.joao.scfcapi.api.dto.ExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
+import pedro.joao.scfcapi.service.CategoriaService;
+import pedro.joao.scfcapi.service.ExamePraticoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,9 +21,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 
 public class ExamePraticoController {
-
+    public final ExamePraticoService service;
+    public final CategoriaService categoriaService;
+    
     public ExamePratico converter(ExamePraticoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, ExamePratico.class);
+        ExamePratico examePratico = modelMapper.map(dto, ExamePratico.class);
+        if (dto.getIdCategoria() != null) {
+            Optional<Categoria> cateogria = categoriaService.getCategoriaById(dto.getIdCategoria());
+            if (!cateogria.isPresent()) {
+                examePratico.setCategoria(null);
+            } else {
+                examePratico.setCategoria(cateogria.get());
+            }
+        }
+        return examePratico;
     }
 }

@@ -21,6 +21,7 @@ public class CategoriaController {
 
     public Categoria converter(CategoriaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Categoria.class);
+        Categoria categoria = modelMapper.map(dto, Categoria.class);
+        return categoria;
     }
 }

@@ -21,6 +21,7 @@ public class InstrutorController {
 
     public Instrutor converter(InstrutorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Instrutor.class);
+        Instrutor instrutor = modelMapper.map(dto, Instrutor.class);
+        return instrutor;
     }
 }

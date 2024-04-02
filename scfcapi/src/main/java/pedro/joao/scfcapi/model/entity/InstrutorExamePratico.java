@@ -5,22 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Contrato {
+public class InstrutorExamePratico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String numero;
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
-    
+
     @ManyToOne
-    private Aluno aluno;
+    private Instrutor instrutor;
+    @ManyToOne
+    private ExamePratico examePratico;
 }

@@ -14,9 +14,4 @@ import lombok.NoArgsConstructor;
 public class Aluno extends Pessoa{
     private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;
-    @ManyToOne
-    private ExamePratico examePratico;
-    @ManyToOne
-    private ExameTeorico exameTeorico;
-
 }

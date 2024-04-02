@@ -1,26 +1,26 @@
 package pedro.joao.scfcapi.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Contrato {
+public class AlunoAulaTeorica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String numero;
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
     
+    @ManyToOne
+    private AulaTeorica aulaTeorica;
+
     @ManyToOne
     private Aluno aluno;
 }

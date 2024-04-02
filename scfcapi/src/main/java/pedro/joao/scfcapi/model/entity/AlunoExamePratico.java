@@ -6,21 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Contrato {
+public class AlunoExamePratico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String numero;
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
-    
+
+    @ManyToOne
+    private ExamePratico examePratico;
+
     @ManyToOne
     private Aluno aluno;
 }

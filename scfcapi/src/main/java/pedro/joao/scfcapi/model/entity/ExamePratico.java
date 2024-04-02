@@ -1,4 +1,5 @@
 package pedro.joao.scfcapi.model.entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,14 +17,12 @@ public class ExamePratico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
     private LocalDate dataExamePratico;
     private LocalTime horarioExamePratico;
+    private String local;
 
 
     @ManyToOne
     private Categoria categoria;
-    @ManyToOne
-    private Instrutor instrutor;
-    @ManyToOne
-    private Veiculo veiculo;
 }

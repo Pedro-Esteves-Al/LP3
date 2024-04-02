@@ -18,11 +18,14 @@ public class ContratoDTO {
     private LocalDate dataFim;
     private Long idAluno;
     private String nomeAluno;
+    private Long idCategoria;
+    private String tipoCategoria;
 
     public static ContratoDTO create(Contrato contrato) {
         ModelMapper modelMapper = new ModelMapper();
         ContratoDTO dto = modelMapper.map(contrato, ContratoDTO.class);
         dto.nomeAluno = contrato.getAluno().getNome();
+        dto.tipoCategoria = contrato.getCategoria().getTipo();
         return dto;
     }
 }

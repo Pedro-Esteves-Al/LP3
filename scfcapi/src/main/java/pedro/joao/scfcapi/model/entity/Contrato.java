@@ -23,4 +23,6 @@ public class Contrato {
     
     @ManyToOne
     private Aluno aluno;
+    @ManyToOne
+    private Categoria categoria;
 }

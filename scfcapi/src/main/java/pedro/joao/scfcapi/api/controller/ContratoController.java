@@ -3,8 +3,10 @@ package pedro.joao.scfcapi.api.controller;
 import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Aluno;
+import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.service.AlunoService;
+import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.ContratoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class ContratoController {
     private final ContratoService service;
     private final AlunoService alunoService;
+    private final CategoriaService categoriaService;
 
     public Contrato converter(ContratoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
@@ -33,6 +36,14 @@ public class ContratoController {
                 contrato.setAluno(null);
             } else {
                 contrato.setAluno(aluno.get());
+            }
+        }
+        if (dto.getIdCategoria() != null) {
+            Optional<Categoria> cateogria = categoriaService.getCategoriaById(dto.getIdCategoria());
+            if (!cateogria.isPresent()) {
+                contrato.setCategoria(null);
+            } else {
+                contrato.setCategoria(cateogria.get());
             }
         }
         return contrato;

@@ -27,7 +27,7 @@ public class InstrutorController {
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Instrutor> instrutores = service.getInstrutor();
+        List<Instrutor> instrutores = service.getInstrutors();
         return ResponseEntity.ok(instrutores.stream().map(InstrutorDTO::create).collect(Collectors.toList()));
     }
 

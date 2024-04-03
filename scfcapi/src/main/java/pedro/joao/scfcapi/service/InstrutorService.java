@@ -11,6 +11,6 @@ import java.util.Optional;
 public class InstrutorService {
     private InstrutorRepository repository;
     public InstrutorService(InstrutorRepository repository) { this.repository = repository;}
-    public List<Instrutor> getInstrutor() {return repository.findAll(); }
+    public List<Instrutor> getInstrutors() {return repository.findAll(); }
     public Optional<Instrutor> getInstrutorById(Long id) {return repository.findById(id);}
 }

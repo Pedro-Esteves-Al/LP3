@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/Simulados")
 @RequiredArgsConstructor
 @CrossOrigin
+
 public class SimuladoController {
 
     private final SimuladoService service;

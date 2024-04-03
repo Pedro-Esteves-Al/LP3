@@ -1,9 +1,11 @@
 package pedro.joao.scfcapi.api.controller;
 
 import pedro.joao.scfcapi.api.dto.ContratoDTO;
+import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Aluno;
 import pedro.joao.scfcapi.model.entity.Categoria;
+import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.service.AlunoService;
 import pedro.joao.scfcapi.service.CategoriaService;
@@ -21,11 +23,27 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/Contratos")
 @RequiredArgsConstructor
+@CrossOrigin
 
 public class ContratoController {
     private final ContratoService service;
     private final AlunoService alunoService;
     private final CategoriaService categoriaService;
+
+    @GetMapping()
+    public ResponseEntity get() {
+        List<Contrato> contratos = service.getContratos();
+        return ResponseEntity.ok(contratos.stream().map(ContratoDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity get(@PathVariable("id")Long id) {
+        Optional<Contrato> contrato = service.getContratoById(id);
+        if(!contrato.isPresent()) {
+            return new ResponseEntity("Contrato não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(contrato.map(ContratoDTO::create));
+    }
 
     public Contrato converter(ContratoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

@@ -1,6 +1,7 @@
 package pedro.joao.scfcapi.api.controller;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/alunos")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class AlunoSimuladoController {
     private final AlunoSimuladoService service;
     private final AlunoService alunoService;

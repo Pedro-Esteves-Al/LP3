@@ -1,11 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
+import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
-import pedro.joao.scfcapi.model.entity.Aluno;
-import pedro.joao.scfcapi.model.entity.AulaPratica;
-import pedro.joao.scfcapi.model.entity.Instrutor;
-import pedro.joao.scfcapi.model.entity.Veiculo;
+import pedro.joao.scfcapi.model.entity.*;
 import pedro.joao.scfcapi.service.AlunoService;
 import pedro.joao.scfcapi.service.AulaPraticaService;
 import pedro.joao.scfcapi.service.InstrutorService;
@@ -23,12 +21,28 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/AulasPraticas")
 @RequiredArgsConstructor
+@CrossOrigin
 
 public class AulaPraticaController {
     private final AulaPraticaService service;
     private final AlunoService alunoService;
     private final InstrutorService instrutorService;
     private final VeiculoService veiculoService;
+
+    @GetMapping()
+    public ResponseEntity get() {
+        List<AulaPratica> aulaPraticas = service.getAulaPraticas();
+        return ResponseEntity.ok(aulaPraticas.stream().map(AulaPraticaDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity get(@PathVariable("id")Long id) {
+        Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
+        if(!aulaPratica.isPresent()) {
+            return new ResponseEntity("AulaPratica não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(aulaPratica.map(AulaPraticaDTO::create));
+    }
 
     public AulaPratica converter(AulaPraticaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

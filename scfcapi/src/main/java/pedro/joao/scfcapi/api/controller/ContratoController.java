@@ -36,7 +36,7 @@ public class ContratoController {
         return ResponseEntity.ok(contratos.stream().map(ContratoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Contrato> contrato = service.getContratoById(id);
         if(!contrato.isPresent()) {

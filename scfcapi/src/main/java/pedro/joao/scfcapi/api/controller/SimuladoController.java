@@ -29,7 +29,7 @@ public class SimuladoController {
         return ResponseEntity.ok(simulados.stream().map(SimuladoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Simulado> simulado = service.getSimuladoById(id);
         if(!simulado.isPresent()) {

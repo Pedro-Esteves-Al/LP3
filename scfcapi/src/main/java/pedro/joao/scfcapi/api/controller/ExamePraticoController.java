@@ -33,7 +33,7 @@ public class ExamePraticoController {
         return ResponseEntity.ok(examePraticos.stream().map(ExamePraticoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<ExamePratico> examePratico = service.getExamePraticoById(id);
         if(!examePratico.isPresent()) {

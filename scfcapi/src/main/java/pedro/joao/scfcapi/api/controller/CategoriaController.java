@@ -31,7 +31,7 @@ public class CategoriaController {
         return ResponseEntity.ok(categorias.stream().map(CategoriaDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if(!categoria.isPresent()) {

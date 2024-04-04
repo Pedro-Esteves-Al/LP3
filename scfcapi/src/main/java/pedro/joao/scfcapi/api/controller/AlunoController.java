@@ -31,7 +31,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunos.stream().map(AlunoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Aluno> aluno = service.getAlunoById(id);
         if(!aluno.isPresent()) {

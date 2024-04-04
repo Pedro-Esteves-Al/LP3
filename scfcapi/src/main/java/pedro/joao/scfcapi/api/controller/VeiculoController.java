@@ -36,7 +36,7 @@ public class VeiculoController {
         return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if(!veiculo.isPresent()) {

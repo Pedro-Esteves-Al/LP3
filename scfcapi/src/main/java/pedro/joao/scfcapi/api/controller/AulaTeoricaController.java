@@ -33,7 +33,7 @@ public class AulaTeoricaController {
         return ResponseEntity.ok(aulaTeoricas.stream().map(AulaTeoricaDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaTeorica> aulaTeorica = service.getAulaTeoricaById(id);
         if(!aulaTeorica.isPresent()) {

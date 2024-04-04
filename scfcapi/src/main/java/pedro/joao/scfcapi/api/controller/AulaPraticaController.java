@@ -35,7 +35,7 @@ public class AulaPraticaController {
         return ResponseEntity.ok(aulaPraticas.stream().map(AulaPraticaDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
         if(!aulaPratica.isPresent()) {

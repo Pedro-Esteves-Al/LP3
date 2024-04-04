@@ -31,7 +31,7 @@ public class InstrutorController {
         return ResponseEntity.ok(instrutores.stream().map(InstrutorDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Instrutor> instrutor = service.getInstrutorById(id);
         if(!instrutor.isPresent()) {

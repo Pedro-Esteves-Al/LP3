@@ -33,7 +33,7 @@ public class ExameTeoricoController {
         return ResponseEntity.ok(examesTeoricos.stream().map(ExameTeoricoDTO::create).collect(Collectors.toList()));
     }
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<ExameTeorico> exameTeorico = service.getExameTeoricoById(id);
         if(!exameTeorico.isPresent()) {

@@ -13,6 +13,8 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SimuladoDTO {
+
+    private Long id;
     private LocalDate dataSimulado;
     private LocalTime horarioSimulado;
 

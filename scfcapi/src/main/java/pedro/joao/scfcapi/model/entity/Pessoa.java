@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 //import javax.persistence.*;
 
 @Data
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @MappedSuperclass
 
+@SuperBuilder
 public abstract class  Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +29,5 @@ public abstract class  Pessoa {
     private String cidade;
     private String uf;
     private String cep;
+    private String cnh;
 }

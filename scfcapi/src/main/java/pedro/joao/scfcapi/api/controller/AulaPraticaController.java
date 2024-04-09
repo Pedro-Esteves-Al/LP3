@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/AulasPraticas")
+@RequestMapping("/api/v1/AulaPraticas")
 @RequiredArgsConstructor
 @CrossOrigin
 

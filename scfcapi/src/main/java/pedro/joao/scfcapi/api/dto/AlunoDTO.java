@@ -24,10 +24,10 @@ public class AlunoDTO {
     private String cidade;
     private String uf;
     private String cep;
-    private boolean aprovadoExameTeorico;
+    /*private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;
     private Long exame_pratico_id;
-    private Long exame_teorico_id;
+    private Long exame_teorico_id;*/
 
 
 

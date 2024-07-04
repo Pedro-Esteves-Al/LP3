@@ -18,7 +18,7 @@ import pedro.joao.scfcapi.service.ExamePraticoService;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("/api/v1/alunos")
+@RequestMapping("/api/v1/alunosExamesPraticos")
 @RequiredArgsConstructor
 @CrossOrigin
 

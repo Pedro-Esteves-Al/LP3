@@ -11,6 +11,7 @@ import pedro.joao.scfcapi.model.entity.Categoria;
 @AllArgsConstructor
 
 public class CategoriaDTO {
+    private Long id;
     private String tipo;
 
     public static CategoriaDTO create(Categoria categoria) {

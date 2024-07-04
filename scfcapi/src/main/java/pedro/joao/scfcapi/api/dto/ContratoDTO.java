@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class ContratoDTO {
+    private Long id;
     private String numero;
     private LocalDate dataInicio;
     private LocalDate dataFim;

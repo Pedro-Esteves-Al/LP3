@@ -20,7 +20,7 @@ import pedro.joao.scfcapi.service.ExameTeoricoService;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("/api/v1/alunos")
+@RequestMapping("/api/v1/alunosExamesTeoricos")
 @RequiredArgsConstructor
 @CrossOrigin
 

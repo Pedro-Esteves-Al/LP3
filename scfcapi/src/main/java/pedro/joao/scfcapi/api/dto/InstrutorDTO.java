@@ -11,6 +11,7 @@ import pedro.joao.scfcapi.model.entity.Instrutor;
 @AllArgsConstructor
 
 public class InstrutorDTO {
+    private Long id;
     private String nome;
     private String email;
     private String telefone;

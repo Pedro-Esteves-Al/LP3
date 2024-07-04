@@ -15,6 +15,7 @@ import pedro.joao.scfcapi.model.entity.VeiculoExamePratico;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VeiculoExamePraticoDTO {
+    private Long id;
     private Long idVeiculo;
     private Long idExamePratico;
     private LocalDate dataExamePratico;

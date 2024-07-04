@@ -17,7 +17,7 @@ import pedro.joao.scfcapi.service.AlunoService;
 import pedro.joao.scfcapi.service.AulaTeoricaService;
 
 @RestController
-//@RequestMapping("/api/v1/alunos")
+@RequestMapping("/api/v1/alunosAulasTeoricas")
 @RequiredArgsConstructor
 @CrossOrigin
 

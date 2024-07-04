@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class AlunoDTO {
+    private Long id;
     private String nome;
     private String email;
     private String telefone;

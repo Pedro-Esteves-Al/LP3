@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoAulaTeoricaDTO {
+    private Long id;
     private Long idAluno;
     private Long idAulaTeorica;
     private String nomeAluno;

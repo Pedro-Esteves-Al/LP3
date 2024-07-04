@@ -11,6 +11,7 @@ import pedro.joao.scfcapi.model.entity.Veiculo;
 @AllArgsConstructor
 
 public class VeiculoDTO {
+    private Long id;
     private String modelo;
     private String placa;
     private Long idInstrutor;

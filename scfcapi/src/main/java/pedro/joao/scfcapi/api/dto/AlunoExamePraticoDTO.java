@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoExamePraticoDTO {
+    private Long id;
     private Long idAluno;
     private Long idExamePratico;
     private LocalDate dataExamePratico;

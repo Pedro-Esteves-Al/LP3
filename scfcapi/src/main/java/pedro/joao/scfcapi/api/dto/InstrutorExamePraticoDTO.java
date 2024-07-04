@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstrutorExamePraticoDTO {
+    private Long id;
     private Long idInstrutor;
     private Long idExamePratico;
     private LocalDate dataExamePratico;

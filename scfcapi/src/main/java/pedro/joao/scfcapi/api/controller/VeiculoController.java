@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/Veiculos")
+@RequestMapping("/api/v1/veiculos")
 @RequiredArgsConstructor
 @CrossOrigin
 

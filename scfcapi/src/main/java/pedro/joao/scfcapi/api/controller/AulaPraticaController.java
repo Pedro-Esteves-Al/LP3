@@ -1,5 +1,6 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
@@ -42,6 +43,17 @@ public class AulaPraticaController {
             return new ResponseEntity("AulaPratica não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aulaPratica.map(AulaPraticaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AulaPraticaDTO dto) {
+        try {
+            AulaPratica aulaPratica = converter(dto);
+            aulaPratica = service.salvar(aulaPratica);
+            return new ResponseEntity(aulaPratica,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public AulaPratica converter(AulaPraticaDTO dto) {

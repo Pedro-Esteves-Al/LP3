@@ -1,8 +1,10 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
 import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.AulaPratica;
 import pedro.joao.scfcapi.model.entity.AulaTeorica;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.model.entity.AulaTeorica;
@@ -40,6 +42,17 @@ public class AulaTeoricaController {
             return new ResponseEntity("AulaTeorica não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aulaTeorica.map(AulaTeoricaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AulaTeoricaDTO dto) {
+        try {
+            AulaTeorica aulaTeorica = converter(dto);
+            aulaTeorica = service.salvar(aulaTeorica);
+            return new ResponseEntity(aulaTeorica,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public AulaTeorica converter(AulaTeoricaDTO dto) {

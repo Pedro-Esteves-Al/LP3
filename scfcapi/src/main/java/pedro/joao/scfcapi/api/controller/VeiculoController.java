@@ -44,6 +44,17 @@ public class VeiculoController {
         }
         return ResponseEntity.ok(veiculo.map(VeiculoDTO::create));
     }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody VeiculoDTO dto) {
+        try {
+            Veiculo veiculo = converter(dto);
+            veiculo = service.salvar(veiculo);
+            return new ResponseEntity(veiculo,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
     
     public Veiculo converter(VeiculoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

@@ -1,21 +1,25 @@
 package pedro.joao.scfcapi.api.controller;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.AlunoAulaTeoricaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 
 import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
 import pedro.joao.scfcapi.model.entity.Aluno;
+import pedro.joao.scfcapi.model.entity.AlunoAulaTeorica;
 import pedro.joao.scfcapi.model.entity.AlunoExamePratico;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.service.AlunoExamePraticoService;
 import pedro.joao.scfcapi.service.AlunoService;
 import pedro.joao.scfcapi.service.ExamePraticoService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/alunosExamesPraticos")
@@ -26,6 +30,32 @@ public class AlunoExamePraticoController {
     public final AlunoExamePraticoService service;
     public final ExamePraticoService examePraticoService;
     public final AlunoService alunoService;
+
+    @GetMapping()
+    public ResponseEntity get() {
+        List<AlunoExamePratico> alunoExamePraticos = service.getAlunoExamePratico();
+        return ResponseEntity.ok(alunoExamePraticos.stream().map(AlunoExamePraticoDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id")Long id) {
+        Optional<AlunoExamePratico> alunoExamePratico = service.getAlunoExamePraticoById(id);
+        if(!alunoExamePratico.isPresent()) {
+            return new ResponseEntity("Alunos não encontrados", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(alunoExamePratico.map(AlunoExamePraticoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AlunoExamePraticoDTO dto) {
+        try {
+            AlunoExamePratico alunoExamePratico = converter(dto);
+            alunoExamePratico = service.salvar(alunoExamePratico);
+            return new ResponseEntity(alunoExamePratico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public AlunoExamePratico converter(AlunoExamePraticoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

@@ -1,8 +1,10 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
 import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.AulaTeorica;
 import pedro.joao.scfcapi.model.entity.Categoria;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,6 +40,17 @@ public class CategoriaController {
             return new ResponseEntity("Categoria não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(categoria.map(CategoriaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody CategoriaDTO dto) {
+        try {
+            Categoria categoria = converter(dto);
+            categoria = service.salvar(categoria);
+            return new ResponseEntity(categoria,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Categoria converter(CategoriaDTO dto) {

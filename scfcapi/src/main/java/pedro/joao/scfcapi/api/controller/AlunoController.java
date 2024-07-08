@@ -40,6 +40,17 @@ public class AlunoController {
         return ResponseEntity.ok(aluno.map(AlunoDTO::create));
     }
 
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AlunoDTO dto) {
+        try {
+            Aluno aluno = converter(dto);
+            aluno = service.salvar(aluno);
+            return new ResponseEntity(aluno,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Aluno converter(AlunoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aluno aluno = modelMapper.map(dto, Aluno.class);

@@ -12,6 +12,6 @@ import java.util.Optional;
 public class AlunoExameTeoricoService {
     private AlunoExameTeoricoRepository repository;
     public AlunoExameTeoricoService(AlunoExameTeoricoRepository repository) { this.repository = repository;}
-    public List<AlunoExameTeorico> getAlunoExameTeoricos() {return repository.findAll(); }
-    public Optional<AlunoExameTeorico> getAlunoExameTeoricosById(Long id) {return repository.findById(id);}
+    public List<AlunoExameTeorico> getAlunoExameTeorico() {return repository.findAll(); }
+    public Optional<AlunoExameTeorico> getAlunoExameTeoricoById(Long id) {return repository.findById(id);}
 }

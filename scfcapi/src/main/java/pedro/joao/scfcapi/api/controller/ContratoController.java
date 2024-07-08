@@ -1,5 +1,6 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
@@ -43,6 +44,17 @@ public class ContratoController {
             return new ResponseEntity("Contrato não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(contrato.map(ContratoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ContratoDTO dto) {
+        try {
+            Contrato contrato = converter(dto);
+            contrato = service.salvar(contrato);
+            return new ResponseEntity(contrato,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Contrato converter(ContratoDTO dto) {

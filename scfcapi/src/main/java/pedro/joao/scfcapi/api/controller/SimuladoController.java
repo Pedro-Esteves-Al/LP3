@@ -1,7 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.InstrutorExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.SimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
 import pedro.joao.scfcapi.model.entity.Simulado;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -37,6 +39,18 @@ public class SimuladoController {
         }
         return ResponseEntity.ok(simulado.map(SimuladoDTO::create));
     }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody SimuladoDTO dto) {
+        try {
+            Simulado simulado = converter(dto);
+            simulado = service.salvar(simulado);
+            return new ResponseEntity(simulado,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Simulado converter(SimuladoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Simulado simulado = modelMapper.map(dto, Simulado.class);

@@ -1,8 +1,10 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.ExameTeoricoDTO;
 import pedro.joao.scfcapi.api.dto.InstrutorDTO;
 import pedro.joao.scfcapi.api.dto.SimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.ExameTeorico;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,6 +40,17 @@ public class InstrutorController {
             return new ResponseEntity("Instrutor não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(instrutor.map(InstrutorDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody InstrutorDTO dto) {
+        try {
+            Instrutor instrutor = converter(dto);
+            instrutor = service.salvar(instrutor);
+            return new ResponseEntity(instrutor,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Instrutor converter(InstrutorDTO dto) {

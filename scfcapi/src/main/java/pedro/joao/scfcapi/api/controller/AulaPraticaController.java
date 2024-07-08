@@ -1,7 +1,5 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
-import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;

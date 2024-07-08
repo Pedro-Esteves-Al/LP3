@@ -1,17 +1,13 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
-import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
-import pedro.joao.scfcapi.model.entity.AulaTeorica;
 import pedro.joao.scfcapi.model.entity.Categoria;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.service.CategoriaService;
 
 import java.util.List;

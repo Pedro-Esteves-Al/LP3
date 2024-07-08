@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.AlunoAulaTeoricaDTO;
-import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.AlunoExameTeoricoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;

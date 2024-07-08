@@ -1,6 +1,9 @@
 package pedro.joao.scfcapi.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Veiculo;
 import pedro.joao.scfcapi.model.repository.VeiculoRepository;
 
@@ -14,4 +17,25 @@ public class VeiculoService {
     public VeiculoService(VeiculoRepository repository) { this.repository = repository;}
     public List<Veiculo> getVeiculos() {return repository.findAll(); }
     public Optional<Veiculo> getVeiculoById(Long id) {return repository.findById(id);}
+
+    @Transactional
+    public Veiculo salvar(Veiculo veiculo) {
+        validar(veiculo);
+        return repository.save(veiculo);
+    }
+
+    public void validar(Veiculo veiculo) {
+        if (veiculo.getInstrutor() == null) {
+            throw new RegraNegocioException("Instrutor Inválido");
+        }
+        if (veiculo.getCategoria() == null) {
+            throw new RegraNegocioException("Categoria Inválida");
+        }
+        if (veiculo.getModelo() == null || veiculo.getModelo().trim().equals("")) {
+            throw new RegraNegocioException("Modelo Inválido");
+        }
+        if (veiculo.getPlaca() == null || veiculo.getPlaca().trim().equals("")) {
+            throw new RegraNegocioException("Placa Inválida");
+        }
+    }
 }

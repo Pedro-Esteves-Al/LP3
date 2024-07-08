@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 
 public class Instrutor extends Pessoa{
 
-    private String cnh;
     private String clt;
 }

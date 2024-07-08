@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.AlunoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 
 import java.util.List;

@@ -1,7 +1,9 @@
 package pedro.joao.scfcapi.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
 import pedro.joao.scfcapi.model.repository.InstrutorExamePraticoRepository;
 
@@ -14,4 +16,19 @@ public class InstrutorExamePraticoService {
     public InstrutorExamePraticoService(InstrutorExamePraticoRepository repository) { this.repository = repository;}
     public List<InstrutorExamePratico> getInstrutorExamePratico() {return repository.findAll(); }
     public Optional<InstrutorExamePratico> getInstrutorExamePraticoById(Long id) {return repository.findById(id);}
+
+    @Transactional
+    public InstrutorExamePratico salvar(InstrutorExamePratico instrutorExamePratico) {
+        validar(instrutorExamePratico);
+        return repository.save(instrutorExamePratico);
+    }
+
+    public void validar(InstrutorExamePratico instrutorExamePratico) {
+        if (instrutorExamePratico.getInstrutor() == null) {
+            throw new RegraNegocioException("Instrutor Inválido");
+        }
+        if (instrutorExamePratico.getExamePratico() == null) {
+            throw new RegraNegocioException("Exame Prático Inválido");
+        }
+    }
 }

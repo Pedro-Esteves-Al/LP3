@@ -1,9 +1,7 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.InstrutorExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.SimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
-import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
 import pedro.joao.scfcapi.model.entity.Simulado;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

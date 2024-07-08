@@ -1,6 +1,9 @@
 package pedro.joao.scfcapi.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.AulaPratica;
 import pedro.joao.scfcapi.model.repository.AulaPraticaRepository;
 
@@ -13,4 +16,28 @@ public class AulaPraticaService {
     public AulaPraticaService(AulaPraticaRepository repository) { this.repository = repository;}
     public List<AulaPratica> getAulaPraticas() {return repository.findAll(); }
     public Optional<AulaPratica> getAulaPraticaById(Long id) {return repository.findById(id);}
+
+    @Transactional
+    public AulaPratica salvar(AulaPratica aulaPratica) {
+        validar(aulaPratica);
+        return repository.save(aulaPratica);
+    }
+
+    public void validar(AulaPratica aulaPratica) {
+        if (aulaPratica.getAluno() == null) {
+            throw new RegraNegocioException("Aluno Inválido");
+        }
+        if (aulaPratica.getInstrutor() == null) {
+            throw new RegraNegocioException("Instrutor Inválido");
+        }
+        if (aulaPratica.getVeiculo() == null) {
+            throw new RegraNegocioException("Veículo Inválido");
+        }
+        if (aulaPratica.getDataAulaPratica() == null) {
+            throw new RegraNegocioException("Data Inválida");
+        }
+        if (aulaPratica.getHorarioAulaPratica() == null) {
+            throw new RegraNegocioException("Horário Inválido");
+        }
+    }
 }

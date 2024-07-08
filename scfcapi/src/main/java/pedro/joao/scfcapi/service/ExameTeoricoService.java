@@ -1,6 +1,9 @@
 package pedro.joao.scfcapi.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.ExameTeorico;
 import pedro.joao.scfcapi.model.repository.ExameTeoricoRepository;
 
@@ -13,4 +16,25 @@ public class ExameTeoricoService {
     public ExameTeoricoService(ExameTeoricoRepository repository) { this.repository = repository;}
     public List<ExameTeorico> getExameTeoricos() {return repository.findAll(); }
     public Optional<ExameTeorico> getExameTeoricoById(Long id) {return repository.findById(id);}
+
+    @Transactional
+    public ExameTeorico salvar(ExameTeorico exameTeorico) {
+        validar(exameTeorico);
+        return repository.save(exameTeorico);
+    }
+
+    public void validar(ExameTeorico exameTeorico) {
+        if (exameTeorico.getCategoria() == null) {
+            throw new RegraNegocioException("Categoria Inválida");
+        }
+        if (exameTeorico.getDataExameTeorico() == null) {
+            throw new RegraNegocioException("Data Inválida");
+        }
+        if (exameTeorico.getHorarioExameTeorico() == null) {
+            throw new RegraNegocioException("Horário Inválido");
+        }
+        if (exameTeorico.getLocalExameTeorico() == null || exameTeorico.getLocalExameTeorico().trim().equals("")) {
+            throw new RegraNegocioException("Local Inválido");
+        }
+    }
 }

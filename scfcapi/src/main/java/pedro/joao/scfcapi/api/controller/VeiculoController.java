@@ -1,11 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.SimuladoDTO;
 import pedro.joao.scfcapi.api.dto.VeiculoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.Instrutor;
-import pedro.joao.scfcapi.model.entity.Simulado;
 import pedro.joao.scfcapi.model.entity.Veiculo;
 import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.InstrutorService;

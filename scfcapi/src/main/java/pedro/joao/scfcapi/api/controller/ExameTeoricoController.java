@@ -1,13 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.ExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.ExameTeoricoDTO;
-import pedro.joao.scfcapi.api.dto.InstrutorDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
-import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.model.entity.ExameTeorico;
-import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.ExameTeoricoService;
 import lombok.RequiredArgsConstructor;

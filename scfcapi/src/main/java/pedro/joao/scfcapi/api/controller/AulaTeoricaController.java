@@ -1,7 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.api.dto.AulaTeoricaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.AulaPratica;
 import pedro.joao.scfcapi.model.entity.AulaTeorica;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.service.AulaTeoricaService;
@@ -35,7 +37,7 @@ public class AulaTeoricaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaTeorica> aulaTeorica = service.getAulaTeoricaById(id);
         if(!aulaTeorica.isPresent()) {
-            return new ResponseEntity("AulaTeorica não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aula teórica não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aulaTeorica.map(AulaTeoricaDTO::create));
     }
@@ -46,6 +48,21 @@ public class AulaTeoricaController {
             AulaTeorica aulaTeorica = converter(dto);
             aulaTeorica = service.salvar(aulaTeorica);
             return new ResponseEntity(aulaTeorica,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping({"id"})
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaTeoricaDTO dto) {
+        if (!service.getAulaTeoricaById(id).isPresent()) {
+            return new ResponseEntity("Aula teórica não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AulaTeorica aulaTeorica = converter(dto);
+            aulaTeorica.setId(id);
+            service.salvar(aulaTeorica);
+            return ResponseEntity.ok(aulaTeorica);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

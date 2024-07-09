@@ -33,7 +33,7 @@ public class CategoriaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if(!categoria.isPresent()) {
-            return new ResponseEntity("Categoria não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Categoria não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(categoria.map(CategoriaDTO::create));
     }
@@ -63,8 +63,6 @@ public class CategoriaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-
 
     public Categoria converter(CategoriaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

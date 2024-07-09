@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.AlunoExameTeoricoDTO;
 import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -36,7 +37,7 @@ public class AlunoSimuladoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoSimulado> alunoSimulado = service.getAlunoSimuladoById(id);
         if(!alunoSimulado.isPresent()) {
-            return new ResponseEntity("Alunos não encontrados", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoSimulado.map(AlunoSimuladoDTO::create));
     }
@@ -47,6 +48,21 @@ public class AlunoSimuladoController {
             AlunoSimulado alunoSimulado = converter(dto);
             alunoSimulado = service.salvar(alunoSimulado);
             return new ResponseEntity(alunoSimulado,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping({"id"})
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoSimuladoDTO dto) {
+        if (!service.getAlunoSimuladoById(id).isPresent()) {
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AlunoSimulado alunoSimulado = converter(dto);
+            alunoSimulado.setId(id);
+            service.salvar(alunoSimulado);
+            return ResponseEntity.ok(alunoSimulado);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

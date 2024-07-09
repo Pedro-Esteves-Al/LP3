@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.InstrutorExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
@@ -39,7 +41,7 @@ public class InstrutorExamePraticaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<InstrutorExamePratico> instrutorExamePratico = service.getInstrutorExamePraticoById(id);
         if(!instrutorExamePratico.isPresent()) {
-            return new ResponseEntity("Instrutor não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(instrutorExamePratico.map(InstrutorExamePraticoDTO::create));
     }
@@ -50,6 +52,21 @@ public class InstrutorExamePraticaController {
             InstrutorExamePratico instrutorExamePratico = converter(dto);
             instrutorExamePratico = service.salvar(instrutorExamePratico);
             return new ResponseEntity(instrutorExamePratico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody InstrutorExamePraticoDTO dto) {
+        if (!service.getInstrutorExamePraticoById(id).isPresent()) {
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            InstrutorExamePratico instrutorExamePratico = converter(dto);
+            instrutorExamePratico.setId(id);
+            service.salvar(instrutorExamePratico);
+            return ResponseEntity.ok(instrutorExamePratico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

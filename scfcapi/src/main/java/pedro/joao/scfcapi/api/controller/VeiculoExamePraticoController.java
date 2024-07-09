@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.VeiculoDTO;
 import pedro.joao.scfcapi.api.dto.VeiculoExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
@@ -49,6 +50,21 @@ public class VeiculoExamePraticoController {
             VeiculoExamePratico veiculoExamePratico = converter(dto);
             veiculoExamePratico = service.salvar(veiculoExamePratico);
             return new ResponseEntity(veiculoExamePratico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody VeiculoExamePraticoDTO dto) {
+        if (!service.getVeiculoExamePraticoById(id).isPresent()) {
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            VeiculoExamePratico veiculoExamePratico = converter(dto);
+            veiculoExamePratico.setId(id);
+            service.salvar(veiculoExamePratico);
+            return ResponseEntity.ok(veiculoExamePratico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

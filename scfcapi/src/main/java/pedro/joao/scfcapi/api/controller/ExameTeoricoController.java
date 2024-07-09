@@ -1,8 +1,10 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.ExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.ExameTeoricoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
+import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.model.entity.ExameTeorico;
 import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.ExameTeoricoService;
@@ -35,7 +37,7 @@ public class ExameTeoricoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<ExameTeorico> exameTeorico = service.getExameTeoricoById(id);
         if(!exameTeorico.isPresent()) {
-            return new ResponseEntity("ExameTeorico não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Exame teórico não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(exameTeorico.map(ExameTeoricoDTO::create));
     }
@@ -46,6 +48,21 @@ public class ExameTeoricoController {
             ExameTeorico exameTeorico = converter(dto);
             exameTeorico = service.salvar(exameTeorico);
             return new ResponseEntity(exameTeorico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody ExameTeoricoDTO dto) {
+        if (!service.getExameTeoricoById(id).isPresent()) {
+            return new ResponseEntity("Exame teórico não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ExameTeorico exameTeorico = converter(dto);
+            exameTeorico.setId(id);
+            service.salvar(exameTeorico);
+            return ResponseEntity.ok(exameTeorico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

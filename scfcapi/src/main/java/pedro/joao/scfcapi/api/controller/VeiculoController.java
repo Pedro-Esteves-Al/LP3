@@ -1,5 +1,6 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.VeiculoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
@@ -38,7 +39,7 @@ public class VeiculoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if(!veiculo.isPresent()) {
-            return new ResponseEntity("Veiculo não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(veiculo.map(VeiculoDTO::create));
     }
@@ -49,6 +50,21 @@ public class VeiculoController {
             Veiculo veiculo = converter(dto);
             veiculo = service.salvar(veiculo);
             return new ResponseEntity(veiculo,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody VeiculoDTO dto) {
+        if (!service.getVeiculoById(id).isPresent()) {
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Veiculo veiculo = converter(dto);
+            veiculo.setId(id);
+            service.salvar(veiculo);
+            return ResponseEntity.ok(veiculo);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

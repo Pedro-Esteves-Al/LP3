@@ -37,7 +37,7 @@ public class AlunoExameTeoricoController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AlunoExameTeorico> alunoExameTeorico = service.getAlunoExameTeoricoById(id);
         if (!alunoExameTeorico.isPresent()) {
-            return new ResponseEntity("Alunos não encontrados", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoExameTeorico.map(AlunoExameTeoricoDTO::create));
     }
@@ -65,29 +65,28 @@ public class AlunoExameTeoricoController {
             return ResponseEntity.ok(alunoExameTeorico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
-
-            public AlunoExameTeorico converter (AlunoExameTeoricoDTO dto){
-                ModelMapper modelMapper = new ModelMapper();
-                AlunoExameTeorico alunoExameTeorico = modelMapper.map(dto, AlunoExameTeorico.class);
-                if (dto.getIdAluno() != null) {
-                    Optional<Aluno> aluno = alunoService.getAlunoById(dto.getIdAluno());
-                    if (!aluno.isPresent()) {
-                        alunoExameTeorico.setAluno(null);
-                    } else {
-                        alunoExameTeorico.setAluno(aluno.get());
-                    }
-                }
-                if (dto.getIdExameTeorico() != null) {
-                    Optional<ExameTeorico> exameTeorico = exameTeoricoService.getExameTeoricoById(dto.getIdExameTeorico());
-                    if (!exameTeorico.isPresent()) {
-                        alunoExameTeorico.setExameTeorico(null);
-                    } else {
-                        alunoExameTeorico.setExameTeorico(exameTeorico.get());
-                    }
-                }
-                return alunoExameTeorico;
+    public AlunoExameTeorico converter(AlunoExameTeoricoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        AlunoExameTeorico alunoExameTeorico = modelMapper.map(dto, AlunoExameTeorico.class);
+        if (dto.getIdAluno() != null) {
+            Optional<Aluno> aluno = alunoService.getAlunoById(dto.getIdAluno());
+            if (!aluno.isPresent()) {
+                alunoExameTeorico.setAluno(null);
+            } else {
+                alunoExameTeorico.setAluno(aluno.get());
             }
         }
+        if (dto.getIdExameTeorico() != null) {
+            Optional<ExameTeorico> exameTeorico = exameTeoricoService.getExameTeoricoById(dto.getIdExameTeorico());
+            if (!exameTeorico.isPresent()) {
+                alunoExameTeorico.setExameTeorico(null);
+            } else {
+                alunoExameTeorico.setExameTeorico(exameTeorico.get());
+            }
+        }
+        return alunoExameTeorico;
     }
 }

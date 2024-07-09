@@ -39,7 +39,7 @@ public class AlunoAulaTeoricaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoAulaTeorica> alunoAulaTeorica = service.getAlunoAulaTeoricaById(id);
         if(!alunoAulaTeorica.isPresent()) {
-            return new ResponseEntity("Alunos não encontrados", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoAulaTeorica.map(AlunoAulaTeoricaDTO::create));
     }

@@ -1,7 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.SimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
+import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.Simulado;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -44,6 +46,21 @@ public class SimuladoController {
             Simulado simulado = converter(dto);
             simulado = service.salvar(simulado);
             return new ResponseEntity(simulado,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody SimuladoDTO dto) {
+        if (!service.getSimuladoById(id).isPresent()) {
+            return new ResponseEntity("Simulado não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Simulado simulado = converter(dto);
+            simulado.setId(id);
+            service.salvar(simulado);
+            return ResponseEntity.ok(simulado);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

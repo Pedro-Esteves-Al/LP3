@@ -1,5 +1,6 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -38,7 +39,7 @@ public class AulaPraticaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
         if(!aulaPratica.isPresent()) {
-            return new ResponseEntity("AulaPratica não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aula prática não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aulaPratica.map(AulaPraticaDTO::create));
     }
@@ -49,6 +50,21 @@ public class AulaPraticaController {
             AulaPratica aulaPratica = converter(dto);
             aulaPratica = service.salvar(aulaPratica);
             return new ResponseEntity(aulaPratica,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping({"id"})
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaPraticaDTO dto) {
+        if (!service.getAulaPraticaById(id).isPresent()) {
+            return new ResponseEntity("Aula prática não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AulaPratica aulaPratica = converter(dto);
+            aulaPratica.setId(id);
+            service.salvar(aulaPratica);
+            return ResponseEntity.ok(aulaPratica);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

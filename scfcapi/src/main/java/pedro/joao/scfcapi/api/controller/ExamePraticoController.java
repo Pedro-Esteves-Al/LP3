@@ -1,8 +1,10 @@
 package pedro.joao.scfcapi.api.controller;
 
+import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.api.dto.ExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
+import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.ExamePraticoService;
@@ -35,7 +37,7 @@ public class ExamePraticoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<ExamePratico> examePratico = service.getExamePraticoById(id);
         if(!examePratico.isPresent()) {
-            return new ResponseEntity("ExamePratico não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Exame prático não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(examePratico.map(ExamePraticoDTO::create));
     }
@@ -46,6 +48,21 @@ public class ExamePraticoController {
             ExamePratico examePratico = converter(dto);
             examePratico = service.salvar(examePratico);
             return new ResponseEntity(examePratico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody ExamePraticoDTO dto) {
+        if (!service.getExamePraticoById(id).isPresent()) {
+            return new ResponseEntity("Exame prático não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ExamePratico examePratico = converter(dto);
+            examePratico.setId(id);
+            service.salvar(examePratico);
+            return ResponseEntity.ok(examePratico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

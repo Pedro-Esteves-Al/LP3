@@ -5,10 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.InstrutorExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
-import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
@@ -26,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin
 
-public class InstrutorExamePraticaController {
+public class InstrutorExamePraticoController {
     private final InstrutorExamePraticoService service;
     private final InstrutorService instrutorService;
     private final ExamePraticoService examePraticoService;

@@ -55,6 +55,21 @@ public class AlunoAulaTeoricaController {
         }
     }
 
+    @PutMapping({"id"}) //talvez igual o get?
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoAulaTeoricaDTO dto) {
+        if(!service.getAlunoAulaTeoricaById(id).isPresent()) {
+            return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);
+        }
+        try {
+            AlunoAulaTeorica alunoAulaTeorica = converter(dto);
+            alunoAulaTeorica.setId(id);
+            service.salvar(alunoAulaTeorica);
+            return ResponseEntity.ok(alunoAulaTeorica);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public AlunoAulaTeorica converter(AlunoAulaTeoricaDTO dto) {
 
         ModelMapper modelMapper = new ModelMapper();

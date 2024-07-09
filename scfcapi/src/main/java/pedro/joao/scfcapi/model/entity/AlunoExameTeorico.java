@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoExameTeorico {
+
+    private boolean aprovado;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

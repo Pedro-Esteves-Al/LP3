@@ -21,6 +21,7 @@ public class AlunoExameTeoricoDTO {
     private String localExameTeorico;
     private String tipoCategoria;
     private String nomeAluno;
+    private boolean aprovado;
 
     public static AlunoExameTeoricoDTO create(AlunoExameTeorico alunoExameTeorico) {
         ModelMapper modelMapper = new ModelMapper();

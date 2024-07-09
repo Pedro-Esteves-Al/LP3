@@ -20,6 +20,7 @@ public class AlunoExamePraticoDTO {
     private LocalTime horarioExamePratico;
     private String nomeAluno;
     private String localExamePratico;
+    private boolean aprovado;
 
     public static AlunoExamePraticoDTO create(AlunoExamePratico alunoExamePratico) {
         ModelMapper modelMapper = new ModelMapper();

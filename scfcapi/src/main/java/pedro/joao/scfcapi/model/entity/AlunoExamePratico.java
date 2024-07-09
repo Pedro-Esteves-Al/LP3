@@ -13,6 +13,8 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoExamePratico {
+
+    private boolean aprovado;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

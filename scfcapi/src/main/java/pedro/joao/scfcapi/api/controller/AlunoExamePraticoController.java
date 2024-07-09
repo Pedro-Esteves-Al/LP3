@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.AlunoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 
 import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
@@ -50,6 +51,21 @@ public class AlunoExamePraticoController {
             AlunoExamePratico alunoExamePratico = converter(dto);
             alunoExamePratico = service.salvar(alunoExamePratico);
             return new ResponseEntity(alunoExamePratico,HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping({"id"})
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoExamePraticoDTO dto) {
+        if(!service.getAlunoExamePraticoById(id).isPresent()) {
+            return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);
+        }
+        try {
+            AlunoExamePratico alunoExamePratico = converter(dto);
+            alunoExamePratico.setId(id);
+            service.salvar(alunoExamePratico);
+            return ResponseEntity.ok(alunoExamePratico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

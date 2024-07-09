@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.AlunoExameTeoricoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -33,9 +34,9 @@ public class AlunoExameTeoricoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id")Long id) {
+    public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AlunoExameTeorico> alunoExameTeorico = service.getAlunoExameTeoricoById(id);
-        if(!alunoExameTeorico.isPresent()) {
+        if (!alunoExameTeorico.isPresent()) {
             return new ResponseEntity("Alunos não encontrados", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoExameTeorico.map(AlunoExameTeoricoDTO::create));
@@ -46,31 +47,47 @@ public class AlunoExameTeoricoController {
         try {
             AlunoExameTeorico alunoExameTeorico = converter(dto);
             alunoExameTeorico = service.salvar(alunoExameTeorico);
-            return new ResponseEntity(alunoExameTeorico,HttpStatus.CREATED);
+            return new ResponseEntity(alunoExameTeorico, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public AlunoExameTeorico converter(AlunoExameTeoricoDTO dto) {
-        ModelMapper modelMapper = new ModelMapper();
-        AlunoExameTeorico alunoExameTeorico = modelMapper.map(dto, AlunoExameTeorico.class);
-        if (dto.getIdAluno() != null) {
-            Optional<Aluno> aluno = alunoService.getAlunoById(dto.getIdAluno());
-            if (!aluno.isPresent()) {
-                alunoExameTeorico.setAluno(null);
-            } else {
-                alunoExameTeorico.setAluno(aluno.get());
+    @PutMapping({"id"})
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoExameTeoricoDTO dto) {
+        if (!service.getAlunoExameTeoricoById(id).isPresent()) {
+            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AlunoExameTeorico alunoExameTeorico = converter(dto);
+            alunoExameTeorico.setId(id);
+            service.salvar(alunoExameTeorico);
+            return ResponseEntity.ok(alunoExameTeorico);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+
+            public AlunoExameTeorico converter (AlunoExameTeoricoDTO dto){
+                ModelMapper modelMapper = new ModelMapper();
+                AlunoExameTeorico alunoExameTeorico = modelMapper.map(dto, AlunoExameTeorico.class);
+                if (dto.getIdAluno() != null) {
+                    Optional<Aluno> aluno = alunoService.getAlunoById(dto.getIdAluno());
+                    if (!aluno.isPresent()) {
+                        alunoExameTeorico.setAluno(null);
+                    } else {
+                        alunoExameTeorico.setAluno(aluno.get());
+                    }
+                }
+                if (dto.getIdExameTeorico() != null) {
+                    Optional<ExameTeorico> exameTeorico = exameTeoricoService.getExameTeoricoById(dto.getIdExameTeorico());
+                    if (!exameTeorico.isPresent()) {
+                        alunoExameTeorico.setExameTeorico(null);
+                    } else {
+                        alunoExameTeorico.setExameTeorico(exameTeorico.get());
+                    }
+                }
+                return alunoExameTeorico;
             }
         }
-        if (dto.getIdExameTeorico() != null) {
-            Optional<ExameTeorico> exameTeorico = exameTeoricoService.getExameTeoricoById(dto.getIdExameTeorico());
-            if (!exameTeorico.isPresent()) {
-                alunoExameTeorico.setExameTeorico(null);
-            } else {
-                alunoExameTeorico.setExameTeorico(exameTeorico.get());
-            }
-        }
-        return alunoExameTeorico;
     }
 }

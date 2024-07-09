@@ -21,7 +21,7 @@ public class AulaPraticaDTO {
     private Long idAluno;
     private String nomeAluno;
     private Long idVeiculo;
-    private String tipoCategoria;
+    private String tipoCategoria; //Não deveria ser só o id da categoria?
 
     public static AulaPraticaDTO create(AulaPratica aulaPratica) {
         ModelMapper modelMapper = new ModelMapper();

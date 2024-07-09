@@ -56,7 +56,7 @@ public class AlunoExamePraticoController {
         }
     }
 
-    @PutMapping({"id"})
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoExamePraticoDTO dto) {
         if(!service.getAlunoExamePraticoById(id).isPresent()) {
             return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);

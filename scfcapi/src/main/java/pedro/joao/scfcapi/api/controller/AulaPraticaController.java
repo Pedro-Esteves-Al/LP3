@@ -55,7 +55,7 @@ public class AulaPraticaController {
         }
     }
 
-    @PutMapping({"id"})
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaPraticaDTO dto) {
         if (!service.getAulaPraticaById(id).isPresent()) {
             return new ResponseEntity("Aula prática não encontrada", HttpStatus.NOT_FOUND);

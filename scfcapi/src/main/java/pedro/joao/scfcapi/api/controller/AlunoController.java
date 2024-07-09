@@ -51,7 +51,7 @@ public class AlunoController {
         }
     }
 
-    @PutMapping({"id"})
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoDTO dto) {
         if(!service.getAlunoById(id).isPresent()) {
             return new ResponseEntity("Aluno não encontrado",HttpStatus.NOT_FOUND);

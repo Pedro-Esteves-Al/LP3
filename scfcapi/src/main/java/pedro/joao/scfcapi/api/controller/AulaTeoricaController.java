@@ -53,7 +53,7 @@ public class AulaTeoricaController {
         }
     }
 
-    @PutMapping({"id"})
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaTeoricaDTO dto) {
         if (!service.getAulaTeoricaById(id).isPresent()) {
             return new ResponseEntity("Aula teórica não encontrada", HttpStatus.NOT_FOUND);

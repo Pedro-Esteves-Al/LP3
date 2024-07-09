@@ -53,7 +53,7 @@ public class AlunoSimuladoController {
         }
     }
 
-    @PutMapping({"id"})
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoSimuladoDTO dto) {
         if (!service.getAlunoSimuladoById(id).isPresent()) {
             return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);

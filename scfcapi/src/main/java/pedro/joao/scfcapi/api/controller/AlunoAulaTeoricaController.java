@@ -55,7 +55,7 @@ public class AlunoAulaTeoricaController {
         }
     }
 
-    @PutMapping({"id"}) //talvez igual o get?
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoAulaTeoricaDTO dto) {
         if(!service.getAlunoAulaTeoricaById(id).isPresent()) {
             return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);

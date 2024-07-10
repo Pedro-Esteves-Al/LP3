@@ -1,6 +1,5 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.AlunoAulaTeoricaDTO;
 import pedro.joao.scfcapi.api.dto.AlunoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Aluno;
@@ -9,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pedro.joao.scfcapi.model.entity.AlunoAulaTeorica;
 import pedro.joao.scfcapi.service.AlunoService;
 
 import java.util.List;
@@ -61,6 +59,20 @@ public class AlunoController {
             aluno.setId(id);
             service.salvar(aluno);
             return ResponseEntity.ok(aluno);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Aluno> aluno = service.getAlunoById(id);
+        if (!aluno.isPresent()) {
+            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(aluno.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

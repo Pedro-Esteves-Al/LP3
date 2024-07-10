@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Aluno;
 import pedro.joao.scfcapi.model.repository.AlunoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class AlunoService {
     public Aluno salvar(Aluno aluno) {
         validar(aluno);
         return repository.save(aluno);
+    }
+
+    @Transactional
+    public void excluir(Aluno aluno) {
+        Objects.requireNonNull(aluno.getId());
+        repository.delete(aluno);
     }
 
     public void validar(Aluno aluno) {
@@ -53,6 +60,9 @@ public class AlunoService {
         }
         if (aluno.getCep() == null || aluno.getCep().trim().equals("")) {
             throw new RegraNegocioException("Cep Inválido");
+        }
+        if (aluno.getMatricula() == null || aluno.getMatricula().trim().equals("")) {
+            throw new RegraNegocioException("Matrícula Inválida");
         }
     }
 }

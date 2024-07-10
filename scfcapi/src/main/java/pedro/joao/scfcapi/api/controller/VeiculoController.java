@@ -1,6 +1,5 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.CategoriaDTO;
 import pedro.joao.scfcapi.api.dto.VeiculoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
@@ -65,6 +64,20 @@ public class VeiculoController {
             veiculo.setId(id);
             service.salvar(veiculo);
             return ResponseEntity.ok(veiculo);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Veiculo> veiculo = service.getVeiculoById(id);
+        if (!veiculo.isPresent()) {
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(veiculo.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

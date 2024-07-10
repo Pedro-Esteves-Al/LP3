@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Simulado;
 import pedro.joao.scfcapi.model.repository.SimuladoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class SimuladoService {
     public Simulado salvar(Simulado simulado) {
         validar(simulado);
         return repository.save(simulado);
+    }
+
+     @Transactional
+    public void excluir(Simulado simulado) {
+        Objects.requireNonNull(simulado.getId());
+        repository.delete(simulado);
     }
 
     public void validar(Simulado simulado) {

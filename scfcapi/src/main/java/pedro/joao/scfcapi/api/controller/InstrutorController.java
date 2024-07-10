@@ -1,9 +1,7 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.ExameTeoricoDTO;
 import pedro.joao.scfcapi.api.dto.InstrutorDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
-import pedro.joao.scfcapi.model.entity.ExameTeorico;
 import pedro.joao.scfcapi.model.entity.Instrutor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -61,6 +59,20 @@ public class InstrutorController {
             instrutor.setId(id);
             service.salvar(instrutor);
             return ResponseEntity.ok(instrutor);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Instrutor> instrutor = service.getInstrutorById(id);
+        if (!instrutor.isPresent()) {
+            return new ResponseEntity("Instrutor não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(instrutor.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

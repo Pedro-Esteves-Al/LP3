@@ -1,10 +1,8 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.ContratoDTO;
 import pedro.joao.scfcapi.api.dto.ExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Categoria;
-import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
 import pedro.joao.scfcapi.service.CategoriaService;
 import pedro.joao.scfcapi.service.ExamePraticoService;
@@ -63,6 +61,20 @@ public class ExamePraticoController {
             examePratico.setId(id);
             service.salvar(examePratico);
             return ResponseEntity.ok(examePratico);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ExamePratico> examePratico = service.getExamePraticoById(id);
+        if (!examePratico.isPresent()) {
+            return new ResponseEntity("Exame Prático não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(examePratico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Contrato;
 import pedro.joao.scfcapi.model.repository.ContratoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class ContratoService {
     public Contrato salvar(Contrato contrato) {
         validar(contrato);
         return repository.save(contrato);
+    }
+
+     @Transactional
+    public void excluir(Contrato contrato) {
+        Objects.requireNonNull(contrato.getId());
+        repository.delete(contrato);
     }
 
     public void validar(Contrato contrato) {

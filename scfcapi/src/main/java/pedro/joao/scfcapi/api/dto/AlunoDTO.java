@@ -25,6 +25,8 @@ public class AlunoDTO {
     private String cidade;
     private String uf;
     private String cep;
+    private String matricula;
+    private String cnh;
     /*private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;
     private Long exame_pratico_id;

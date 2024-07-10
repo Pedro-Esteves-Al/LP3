@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Veiculo;
 import pedro.joao.scfcapi.model.repository.VeiculoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,12 @@ public class VeiculoService {
     public Veiculo salvar(Veiculo veiculo) {
         validar(veiculo);
         return repository.save(veiculo);
+    }
+
+     @Transactional
+    public void excluir(Veiculo veiculo) {
+        Objects.requireNonNull(veiculo.getId());
+        repository.delete(veiculo);
     }
 
     public void validar(Veiculo veiculo) {

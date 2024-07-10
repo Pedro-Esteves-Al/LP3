@@ -39,7 +39,7 @@ public class AlunoAulaTeoricaController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoAulaTeorica> alunoAulaTeorica = service.getAlunoAulaTeoricaById(id);
         if(!alunoAulaTeorica.isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Aula Teórica não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoAulaTeorica.map(AlunoAulaTeoricaDTO::create));
     }
@@ -58,13 +58,27 @@ public class AlunoAulaTeoricaController {
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoAulaTeoricaDTO dto) {
         if(!service.getAlunoAulaTeoricaById(id).isPresent()) {
-            return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Aula Teórica não encontrada",HttpStatus.NOT_FOUND);
         }
         try {
             AlunoAulaTeorica alunoAulaTeorica = converter(dto);
             alunoAulaTeorica.setId(id);
             service.salvar(alunoAulaTeorica);
             return ResponseEntity.ok(alunoAulaTeorica);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AlunoAulaTeorica> alunoAulaTeorica = service.getAlunoAulaTeoricaById(id);
+        if (!alunoAulaTeorica.isPresent()) {
+            return new ResponseEntity("Aluno ou Aula Teórica não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(alunoAulaTeorica.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

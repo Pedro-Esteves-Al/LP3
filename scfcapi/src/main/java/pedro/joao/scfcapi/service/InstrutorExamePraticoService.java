@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.InstrutorExamePratico;
 import pedro.joao.scfcapi.model.repository.InstrutorExamePraticoRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class InstrutorExamePraticoService {
     public InstrutorExamePratico salvar(InstrutorExamePratico instrutorExamePratico) {
         validar(instrutorExamePratico);
         return repository.save(instrutorExamePratico);
+    }
+
+     @Transactional
+    public void excluir(InstrutorExamePratico instrutorExamePratico) {
+        Objects.requireNonNull(instrutorExamePratico.getId());
+        repository.delete(instrutorExamePratico);
     }
 
     public void validar(InstrutorExamePratico instrutorExamePratico) {

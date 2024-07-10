@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Categoria;
 import pedro.joao.scfcapi.model.repository.CategoriaRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class CategoriaService {
     public Categoria salvar(Categoria categoria) {
         validar(categoria);
         return repository.save(categoria);
+    }
+
+     @Transactional
+    public void excluir(Categoria categoria) {
+        Objects.requireNonNull(categoria.getId());
+        repository.delete(categoria);
     }
 
     public void validar(Categoria categoria) {

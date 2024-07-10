@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.AulaPratica;
 import pedro.joao.scfcapi.model.repository.AulaPraticaRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class AulaPraticaService {
     public AulaPratica salvar(AulaPratica aulaPratica) {
         validar(aulaPratica);
         return repository.save(aulaPratica);
+    }
+
+     @Transactional
+    public void excluir(AulaPratica aulaPratica) {
+        Objects.requireNonNull(aulaPratica.getId());
+        repository.delete(aulaPratica);
     }
 
     public void validar(AulaPratica aulaPratica) {

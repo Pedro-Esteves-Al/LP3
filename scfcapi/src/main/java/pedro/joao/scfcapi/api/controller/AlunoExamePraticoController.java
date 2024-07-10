@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.AlunoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 
 import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
@@ -40,7 +39,7 @@ public class AlunoExamePraticoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoExamePratico> alunoExamePratico = service.getAlunoExamePraticoById(id);
         if(!alunoExamePratico.isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Exame Prático não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoExamePratico.map(AlunoExamePraticoDTO::create));
     }
@@ -59,13 +58,27 @@ public class AlunoExamePraticoController {
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoExamePraticoDTO dto) {
         if(!service.getAlunoExamePraticoById(id).isPresent()) {
-            return new ResponseEntity("Relação não encontrada",HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Exame Prático não encontrado",HttpStatus.NOT_FOUND);
         }
         try {
             AlunoExamePratico alunoExamePratico = converter(dto);
             alunoExamePratico.setId(id);
             service.salvar(alunoExamePratico);
             return ResponseEntity.ok(alunoExamePratico);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AlunoExamePratico> alunoExamePratico = service.getAlunoExamePraticoById(id);
+        if (!alunoExamePratico.isPresent()) {
+            return new ResponseEntity("Aluno ou Exame Prático não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(alunoExamePratico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

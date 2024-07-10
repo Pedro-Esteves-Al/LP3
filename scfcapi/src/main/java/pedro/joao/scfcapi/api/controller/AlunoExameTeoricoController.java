@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.AlunoExamePraticoDTO;
 import pedro.joao.scfcapi.api.dto.AlunoExameTeoricoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -37,7 +36,7 @@ public class AlunoExameTeoricoController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AlunoExameTeorico> alunoExameTeorico = service.getAlunoExameTeoricoById(id);
         if (!alunoExameTeorico.isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Exame Teórico não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoExameTeorico.map(AlunoExameTeoricoDTO::create));
     }
@@ -56,13 +55,27 @@ public class AlunoExameTeoricoController {
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoExameTeoricoDTO dto) {
         if (!service.getAlunoExameTeoricoById(id).isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Exame Teórico não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             AlunoExameTeorico alunoExameTeorico = converter(dto);
             alunoExameTeorico.setId(id);
             service.salvar(alunoExameTeorico);
             return ResponseEntity.ok(alunoExameTeorico);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AlunoExameTeorico> alunoExameTeorico = service.getAlunoExameTeoricoById(id);
+        if (!alunoExameTeorico.isPresent()) {
+            return new ResponseEntity("Aluno ou Exame Teórico não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(alunoExameTeorico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

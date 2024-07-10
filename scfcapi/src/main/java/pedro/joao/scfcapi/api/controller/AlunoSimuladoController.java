@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.AlunoExameTeoricoDTO;
 import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -37,7 +36,7 @@ public class AlunoSimuladoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoSimulado> alunoSimulado = service.getAlunoSimuladoById(id);
         if(!alunoSimulado.isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Simulado não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(alunoSimulado.map(AlunoSimuladoDTO::create));
     }
@@ -56,13 +55,27 @@ public class AlunoSimuladoController {
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoSimuladoDTO dto) {
         if (!service.getAlunoSimuladoById(id).isPresent()) {
-            return new ResponseEntity("Relação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aluno ou Simulado não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             AlunoSimulado alunoSimulado = converter(dto);
             alunoSimulado.setId(id);
             service.salvar(alunoSimulado);
             return ResponseEntity.ok(alunoSimulado);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AlunoSimulado> alunoSimulado = service.getAlunoSimuladoById(id);
+        if (!alunoSimulado.isPresent()) {
+            return new ResponseEntity("Aluno ou Simulado não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(alunoSimulado.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

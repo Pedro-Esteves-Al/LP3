@@ -1,6 +1,5 @@
 package pedro.joao.scfcapi.api.controller;
 
-import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
@@ -65,6 +64,20 @@ public class AulaPraticaController {
             aulaPratica.setId(id);
             service.salvar(aulaPratica);
             return ResponseEntity.ok(aulaPratica);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
+        if (!aulaPratica.isPresent()) {
+            return new ResponseEntity("Aula Prática não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(aulaPratica.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

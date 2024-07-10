@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import pedro.joao.scfcapi.api.dto.VeiculoDTO;
 import pedro.joao.scfcapi.api.dto.VeiculoExamePraticoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.ExamePratico;
@@ -39,7 +38,7 @@ public class VeiculoExamePraticoController {
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<VeiculoExamePratico> veiculoExamePratico = service.getVeiculoExamePraticoById(id);
         if(!veiculoExamePratico.isPresent()) {
-            return new ResponseEntity("Veiculo não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Veículo ou Exame Prático não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(veiculoExamePratico.map(VeiculoExamePraticoDTO::create));
     }
@@ -58,13 +57,27 @@ public class VeiculoExamePraticoController {
     @PutMapping("{id}")
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody VeiculoExamePraticoDTO dto) {
         if (!service.getVeiculoExamePraticoById(id).isPresent()) {
-            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Veículo ou Exame Prático não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             VeiculoExamePratico veiculoExamePratico = converter(dto);
             veiculoExamePratico.setId(id);
             service.salvar(veiculoExamePratico);
             return ResponseEntity.ok(veiculoExamePratico);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<VeiculoExamePratico> veiculoExamePratico = service.getVeiculoExamePraticoById(id);
+        if (!veiculoExamePratico.isPresent()) {
+            return new ResponseEntity("Veículo ou Exame Prático não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(veiculoExamePratico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

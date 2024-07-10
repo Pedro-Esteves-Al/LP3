@@ -8,6 +8,7 @@ import pedro.joao.scfcapi.model.entity.Instrutor;
 import pedro.joao.scfcapi.model.repository.InstrutorRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,12 @@ public class InstrutorService {
     public Instrutor salvar(Instrutor instrutor) {
         validar(instrutor);
         return repository.save(instrutor);
+    }
+
+     @Transactional
+    public void excluir(Instrutor instrutor) {
+        Objects.requireNonNull(instrutor.getId());
+        repository.delete(instrutor);
     }
 
     public void validar(Instrutor instrutor) {

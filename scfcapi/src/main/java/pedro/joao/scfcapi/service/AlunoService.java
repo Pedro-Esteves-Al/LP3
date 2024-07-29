@@ -61,8 +61,8 @@ public class AlunoService {
         if (aluno.getCep() == null || aluno.getCep().trim().equals("")) {
             throw new RegraNegocioException("Cep Inválido");
         }
-        if (aluno.getMatricula() == null || aluno.getMatricula().trim().equals("")) {
-            throw new RegraNegocioException("Matrícula Inválida");
+        if (aluno.getContrato() == null) {
+            throw new RegraNegocioException("Contrato Inválido");
         }
     }
 }

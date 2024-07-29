@@ -46,5 +46,9 @@ public class AulaPraticaService {
         if (aulaPratica.getHorarioAulaPratica() == null) {
             throw new RegraNegocioException("Horário Inválido");
         }
+        if (aulaPratica.getCategoria() == null) {
+            throw new RegraNegocioException("Categoria Inválido");
+
+        }
     }
 }

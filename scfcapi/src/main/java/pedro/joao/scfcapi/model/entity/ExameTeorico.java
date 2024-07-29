@@ -21,6 +21,6 @@ public class ExameTeorico {
     private LocalTime horarioExameTeorico;
     private String localExameTeorico;
 
-    @ManyToOne
-    private Categoria categoria;
+    /*@ManyToOne
+    private Categoria categoria;*/
 }

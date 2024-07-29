@@ -17,6 +17,6 @@ import lombok.experimental.SuperBuilder;
 //@SuperBuilder
 
 public class Aluno extends Pessoa {
-    private String matricula;//isso aqui não pode existir, mas se comentar não roda
-    //private boolean aprovadoExamePratico; //atributo da ligação, já excluido no banco de dados
+    @ManyToOne
+    private Contrato contrato;
 }

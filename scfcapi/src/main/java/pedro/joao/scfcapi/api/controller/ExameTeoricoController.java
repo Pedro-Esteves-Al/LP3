@@ -83,14 +83,14 @@ public class ExameTeoricoController {
     public ExameTeorico converter(ExameTeoricoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ExameTeorico exameTeorico = modelMapper.map(dto, ExameTeorico.class);
-        if (dto.getIdCategoria() != null) {
+        /*if (dto.getIdCategoria() != null) {
             Optional<Categoria> cateogria = categoriaService.getCategoriaById(dto.getIdCategoria());
             if (!cateogria.isPresent()) {
                 exameTeorico.setCategoria(null);
             } else {
                 exameTeorico.setCategoria(cateogria.get());
             }
-        }
+        }*/
         return exameTeorico;
     }
 }

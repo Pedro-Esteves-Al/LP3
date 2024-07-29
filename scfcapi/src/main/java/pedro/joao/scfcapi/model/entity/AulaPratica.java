@@ -25,5 +25,7 @@ public class AulaPratica {
     @ManyToOne
     private Veiculo veiculo;
     @ManyToOne
+    private Categoria categoria;
+    @ManyToOne
     private Aluno aluno;
 }

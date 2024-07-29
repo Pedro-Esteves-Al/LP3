@@ -3,10 +3,7 @@ package pedro.joao.scfcapi.api.controller;
 import pedro.joao.scfcapi.api.dto.AulaPraticaDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.*;
-import pedro.joao.scfcapi.service.AlunoService;
-import pedro.joao.scfcapi.service.AulaPraticaService;
-import pedro.joao.scfcapi.service.InstrutorService;
-import pedro.joao.scfcapi.service.VeiculoService;
+import pedro.joao.scfcapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -27,6 +24,7 @@ public class AulaPraticaController {
     private final AlunoService alunoService;
     private final InstrutorService instrutorService;
     private final VeiculoService veiculoService;
+    private final CategoriaService categoriaService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -108,6 +106,14 @@ public class AulaPraticaController {
                 aulaPratica.setInstrutor(null);
             } else {
                 aulaPratica.setInstrutor(instrutor.get());
+            }
+        }
+        if (dto.getIdCategoria() != null) {
+            Optional<Categoria> categoria = categoriaService.getCategoriaById(dto.getIdCategoria());
+            if (!categoria.isPresent()) {
+                aulaPratica.setCategoria(null);
+            } else {
+                aulaPratica.setCategoria(categoria.get());
             }
         }
         return aulaPratica;

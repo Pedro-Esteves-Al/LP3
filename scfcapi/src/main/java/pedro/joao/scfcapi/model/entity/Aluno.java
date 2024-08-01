@@ -17,6 +17,5 @@ import lombok.experimental.SuperBuilder;
 //@SuperBuilder
 
 public class Aluno extends Pessoa {
-    @ManyToOne
-    private Contrato contrato;
+    private String matricula;
 }

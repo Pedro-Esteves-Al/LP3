@@ -21,16 +21,19 @@ public class AulaPraticaDTO {
     private Long idAluno;
     private String nomeAluno;
     private Long idVeiculo;
-    //private String tipoCategoria; //Não deveria ser só o id da categoria?
+    private String modeloVeiculo;
     private Long idCategoria;
+    private String tipoCategoria;
 
     public static AulaPraticaDTO create(AulaPratica aulaPratica) {
         ModelMapper modelMapper = new ModelMapper();
         AulaPraticaDTO dto = modelMapper.map(aulaPratica, AulaPraticaDTO.class);
         dto.nomeInstrutor = aulaPratica.getInstrutor().getNome();
         dto.nomeAluno = aulaPratica.getAluno().getNome();
-        //dto.tipoCategoria = aulaPratica.getVeiculo().getCategoria().getTipo();
+        dto.modeloVeiculo = aulaPratica.getVeiculo().getModelo();
         dto.idCategoria = aulaPratica.getCategoria().getId();
+        dto.tipoCategoria = aulaPratica.getCategoria().getTipo();
+
         return dto;
     }
 }

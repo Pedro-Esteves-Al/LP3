@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import pedro.joao.scfcapi.model.entity.AulaTeorica;
-import pedro.joao.scfcapi.model.entity.Instrutor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

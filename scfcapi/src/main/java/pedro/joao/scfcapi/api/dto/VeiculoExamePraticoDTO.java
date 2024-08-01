@@ -21,16 +21,24 @@ public class VeiculoExamePraticoDTO {
     private LocalDate dataExamePratico;
     private LocalTime horarioExamePratico;
     private String local;
-    private String modelo;
+    private String modeloVeiculo;
     private String placa;
+    private Long idInstrutor;
+    private String nomeInstrutor;
+    private Long idCategoria;
+    private String tipoCategoria;
 
     public static VeiculoExamePraticoDTO create(VeiculoExamePratico veiculoExamePratico) {
         ModelMapper modelMapper = new ModelMapper();
         VeiculoExamePraticoDTO dto = modelMapper.map(veiculoExamePratico, VeiculoExamePraticoDTO.class);
         dto.local = veiculoExamePratico.getExamePratico().getLocal();
-        dto.modelo = veiculoExamePratico.getVeiculo().getModelo();
+        dto.modeloVeiculo = veiculoExamePratico.getVeiculo().getModelo();
         dto.dataExamePratico = veiculoExamePratico.getExamePratico().getDataExamePratico();
         dto.horarioExamePratico = veiculoExamePratico.getExamePratico().getHorarioExamePratico();
+        dto.idInstrutor = veiculoExamePratico.getVeiculo().getInstrutor().getId();
+        dto.nomeInstrutor = veiculoExamePratico.getVeiculo().getInstrutor().getNome();
+        dto.idCategoria = veiculoExamePratico.getVeiculo().getCategoria().getId();
+        dto.tipoCategoria = veiculoExamePratico.getVeiculo().getCategoria().getTipo();
         return dto;
     }
 }

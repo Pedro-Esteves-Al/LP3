@@ -27,7 +27,6 @@ public class AlunoDTO {
     private String cep;
     private String matricula;
     private String cnh;
-    private Long idContrato;
 
     /*private boolean aprovadoExameTeorico;
     private boolean aprovadoExamePratico;

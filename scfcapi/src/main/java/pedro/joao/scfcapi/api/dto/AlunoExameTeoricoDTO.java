@@ -30,6 +30,7 @@ public class AlunoExameTeoricoDTO {
         dto.nomeAluno = alunoExameTeorico.getAluno().getNome();
         dto.dataExameTeorico = alunoExameTeorico.getExameTeorico().getDataExameTeorico();
         dto.horarioExameTeorico = alunoExameTeorico.getExameTeorico().getHorarioExameTeorico();
+       // dto.tipoCategoria = alunoExameTeorico.getExameTeorico().getCategoria().getTipo();
         return dto;
     }
 }

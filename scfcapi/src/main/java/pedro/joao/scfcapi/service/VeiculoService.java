@@ -32,12 +32,12 @@ public class VeiculoService {
     }
 
     public void validar(Veiculo veiculo) {
-        if (veiculo.getInstrutor() == null) {
-            throw new RegraNegocioException("Instrutor Inválido");
-        }
-        if (veiculo.getCategoria() == null) {
-            throw new RegraNegocioException("Categoria Inválida");
-        }
+//        if (veiculo.getInstrutor() == null) {
+//            throw new RegraNegocioException("Instrutor Inválido");
+//        }
+//        if (veiculo.getCategoria() == null) {
+//            throw new RegraNegocioException("Categoria Inválida");
+//        }
         if (veiculo.getModelo() == null || veiculo.getModelo().trim().equals("")) {
             throw new RegraNegocioException("Modelo Inválido");
         }

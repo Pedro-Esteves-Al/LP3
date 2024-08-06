@@ -95,11 +95,11 @@ public class VeiculoController {
             }
         }
         if (dto.getIdInstrutor() != null) {
-            Optional<Instrutor> cateogria = instrutorService.getInstrutorById(dto.getIdInstrutor());
-            if (!cateogria.isPresent()) {
+            Optional<Instrutor> instrutor = instrutorService.getInstrutorById(dto.getIdInstrutor());
+            if (!instrutor.isPresent()) {
                 veiculo.setInstrutor(null);
             } else {
-                veiculo.setInstrutor(cateogria.get());
+                veiculo.setInstrutor(instrutor.get());
             }
         }
         return veiculo;

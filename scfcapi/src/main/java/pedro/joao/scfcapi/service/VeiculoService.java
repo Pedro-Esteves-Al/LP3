@@ -15,9 +15,18 @@ import java.util.Optional;
 
 public class VeiculoService {
     private VeiculoRepository repository;
-    public VeiculoService(VeiculoRepository repository) { this.repository = repository;}
-    public List<Veiculo> getVeiculos() {return repository.findAll(); }
-    public Optional<Veiculo> getVeiculoById(Long id) {return repository.findById(id);}
+
+    public VeiculoService(VeiculoRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<Veiculo> getVeiculos() {
+        return repository.findAll();
+    }
+
+    public Optional<Veiculo> getVeiculoById(Long id) {
+        return repository.findById(id);
+    }
 
     @Transactional
     public Veiculo salvar(Veiculo veiculo) {
@@ -25,19 +34,19 @@ public class VeiculoService {
         return repository.save(veiculo);
     }
 
-     @Transactional
+    @Transactional
     public void excluir(Veiculo veiculo) {
         Objects.requireNonNull(veiculo.getId());
         repository.delete(veiculo);
     }
 
     public void validar(Veiculo veiculo) {
-//        if (veiculo.getInstrutor() == null) {
-//            throw new RegraNegocioException("Instrutor Inválido");
-//        }
-//        if (veiculo.getCategoria() == null) {
-//            throw new RegraNegocioException("Categoria Inválida");
-//        }
+        if (veiculo.getInstrutor() == null) {
+            throw new RegraNegocioException("Instrutor Inválido");
+        }
+        if (veiculo.getCategoria() == null) {
+            throw new RegraNegocioException("Categoria Inválida");
+        }
         if (veiculo.getModelo() == null || veiculo.getModelo().trim().equals("")) {
             throw new RegraNegocioException("Modelo Inválido");
         }

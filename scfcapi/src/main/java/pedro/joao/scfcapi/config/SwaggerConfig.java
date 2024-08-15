@@ -1,4 +1,4 @@
-package pedro.joao.scfcapi.api.config;
+package pedro.joao.scfcapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("pedro.joao.scfapi.api.controller"))
+                        .basePackage("pedro.joao.scfcapi.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 //.securityContexts(Arrays.asList(securityContext()))

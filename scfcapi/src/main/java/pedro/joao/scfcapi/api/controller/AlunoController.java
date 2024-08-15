@@ -1,5 +1,9 @@
 package pedro.joao.scfcapi.api.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pedro.joao.scfcapi.api.dto.AlunoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 import pedro.joao.scfcapi.model.entity.Aluno;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/alunos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class AlunoController {
 
@@ -30,6 +35,11 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um aluno")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno encontrado"),
+            @ApiResponse(code = 404, message = "Aluno não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Aluno> aluno = service.getAlunoById(id);
         if(!aluno.isPresent()) {
@@ -39,6 +49,11 @@ public class AlunoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Aluno")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o aluno")
+    })
     public ResponseEntity post(@RequestBody AlunoDTO dto) {
         try {
             Aluno aluno = converter(dto);
@@ -50,6 +65,11 @@ public class AlunoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um aluno")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o aluno")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoDTO dto) {
         if(!service.getAlunoById(id).isPresent()) {
             return new ResponseEntity("Aluno não encontrado",HttpStatus.NOT_FOUND);
@@ -65,6 +85,11 @@ public class AlunoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um aluno")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o aluno")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Aluno> aluno = service.getAlunoById(id);
         if (!aluno.isPresent()) {

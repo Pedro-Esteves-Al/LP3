@@ -11,7 +11,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 @Configuration
 @EnableSwagger2
@@ -40,10 +40,19 @@ public class SwaggerConfig {
                 .build();
     }
 
+   /* private String contact() {
+        ArrayList<Contact> contatos = new ArrayList<Contact>();
+        Contact pedro = new Contact("Pedro Esteves"
+                , "https://github.com/Pedro-Esteves-Al",
+                "pedroestevesa@gmail.com");
+        contatos.add(pedro);
+        return contatos.toString();
+    }*/
+
     private Contact contact(){
-        return new Contact("Marco Antônio Araújo"
-                , "http://github.com/marcoaparaujo",
-                "marcoaparaujo@gmail.com");
+        return new Contact("Pedro Esteves/ João Vitor Pacheco"
+                , "https://github.com/Pedro-Esteves-Al/LP3",
+                "pedroestevesa@gmail.com");
     }
 
 

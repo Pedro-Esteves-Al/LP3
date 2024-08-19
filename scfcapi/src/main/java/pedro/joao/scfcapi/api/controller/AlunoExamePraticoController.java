@@ -4,6 +4,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
 
@@ -23,6 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/alunosExamesPraticos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class AlunoExamePraticoController {
     public final AlunoExamePraticoService service;
@@ -36,6 +42,11 @@ public class AlunoExamePraticoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Aluno e um Exame Prático que ele participa ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Exame Prático encontrado"),
+            @ApiResponse(code = 404, message = "Aluno/Exame Prático não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoExamePratico> alunoExamePratico = service.getAlunoExamePraticoById(id);
         if(!alunoExamePratico.isPresent()) {
@@ -45,6 +56,11 @@ public class AlunoExamePraticoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva a participação de um Aluno no Exame Prático ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Exame Prático salva com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao salvar Aluno/Exame Prático")
+    })
     public ResponseEntity post(@RequestBody AlunoExamePraticoDTO dto) {
         try {
             AlunoExamePratico alunoExamePratico = converter(dto);
@@ -56,6 +72,11 @@ public class AlunoExamePraticoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita a participação de um Aluno em um Exame Prático ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Exame Prático editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar Aluno/Exame Prático")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoExamePraticoDTO dto) {
         if(!service.getAlunoExamePraticoById(id).isPresent()) {
             return new ResponseEntity("Aluno ou Exame Prático não encontrado",HttpStatus.NOT_FOUND);
@@ -71,6 +92,11 @@ public class AlunoExamePraticoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta a participação de um Aluno em um Exame Prático ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Exame Prático deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar Aluno/Exame Prático")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AlunoExamePratico> alunoExamePratico = service.getAlunoExamePraticoById(id);
         if (!alunoExamePratico.isPresent()) {

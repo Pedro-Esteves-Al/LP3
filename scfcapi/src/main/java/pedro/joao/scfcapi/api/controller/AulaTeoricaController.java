@@ -12,6 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/aulasTeoricas")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class AulaTeoricaController {
     private final AulaTeoricaService service;
@@ -32,6 +38,11 @@ public class AulaTeoricaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma Aula Teórica")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Teórica encontrada"),
+            @ApiResponse(code = 404, message = "Aula Teórica não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaTeorica> aulaTeorica = service.getAulaTeoricaById(id);
         if(!aulaTeorica.isPresent()) {
@@ -41,6 +52,11 @@ public class AulaTeoricaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova Aula Teórica")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Teórica salva com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Aula Teórica")
+    })
     public ResponseEntity post(@RequestBody AulaTeoricaDTO dto) {
         try {
             AulaTeorica aulaTeorica = converter(dto);
@@ -52,6 +68,11 @@ public class AulaTeoricaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de uma Aula Teórica")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Teórica editada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Aula Teórica")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaTeoricaDTO dto) {
         if (!service.getAulaTeoricaById(id).isPresent()) {
             return new ResponseEntity("Aula Teórica não encontrada", HttpStatus.NOT_FOUND);
@@ -67,6 +88,11 @@ public class AulaTeoricaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta uma Aula Teórica")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Teórica deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar a Aula Teórica")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AulaTeorica> aulaTeorica = service.getAulaTeoricaById(id);
         if (!aulaTeorica.isPresent()) {

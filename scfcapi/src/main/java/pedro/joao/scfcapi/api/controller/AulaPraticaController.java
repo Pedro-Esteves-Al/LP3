@@ -10,6 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +23,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/aulasPraticas")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
+
 
 public class AulaPraticaController {
     private final AulaPraticaService service;
@@ -33,6 +40,11 @@ public class AulaPraticaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma Aula Prática")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Prática encontrada"),
+            @ApiResponse(code = 404, message = "Aula Prática não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
         if(!aulaPratica.isPresent()) {
@@ -42,6 +54,11 @@ public class AulaPraticaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova Aula Prática")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Prática salva com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar a Aula Prática")
+    })
     public ResponseEntity post(@RequestBody AulaPraticaDTO dto) {
         try {
             AulaPratica aulaPratica = converter(dto);
@@ -53,6 +70,11 @@ public class AulaPraticaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de uma Aula Prática")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Prática editada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar a Aula Prática")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaPraticaDTO dto) {
         if (!service.getAulaPraticaById(id).isPresent()) {
             return new ResponseEntity("Aula prática não encontrada", HttpStatus.NOT_FOUND);
@@ -68,6 +90,11 @@ public class AulaPraticaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta uma Aula Prática")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula Prática deletada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar a Aula Prática")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AulaPratica> aulaPratica = service.getAulaPraticaById(id);
         if (!aulaPratica.isPresent()) {

@@ -14,6 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/contratos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class ContratoController {
     private final ContratoService service;
@@ -35,6 +41,11 @@ public class ContratoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Contrato")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Contrato encontrado"),
+            @ApiResponse(code = 404, message = "Contrato não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Contrato> contrato = service.getContratoById(id);
         if(!contrato.isPresent()) {
@@ -44,6 +55,11 @@ public class ContratoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Contrato")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Contrato salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Contrato")
+    })
     public ResponseEntity post(@RequestBody ContratoDTO dto) {
         try {
             Contrato contrato = converter(dto);
@@ -55,6 +71,11 @@ public class ContratoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um Contrato")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Contrato editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Contrato")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody ContratoDTO dto) {
         if (!service.getContratoById(id).isPresent()) {
             return new ResponseEntity("Contrato não encontrado", HttpStatus.NOT_FOUND);
@@ -70,6 +91,11 @@ public class ContratoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um Contrato")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Contrato deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o Contrato")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Contrato> contrato = service.getContratoById(id);
         if (!contrato.isPresent()) {

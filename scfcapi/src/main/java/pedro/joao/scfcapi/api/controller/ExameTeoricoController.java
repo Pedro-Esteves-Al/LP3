@@ -12,6 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/examesTeoricos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class ExameTeoricoController {
     private final ExameTeoricoService service;
@@ -32,6 +38,11 @@ public class ExameTeoricoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Exame Teórico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame Teórico encontrado"),
+            @ApiResponse(code = 404, message = "Exame Teórico não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<ExameTeorico> exameTeorico = service.getExameTeoricoById(id);
         if(!exameTeorico.isPresent()) {
@@ -41,6 +52,11 @@ public class ExameTeoricoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Exame Teórico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame Teórico salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Exame Teórico")
+    })
     public ResponseEntity post(@RequestBody ExameTeoricoDTO dto) {
         try {
             ExameTeorico exameTeorico = converter(dto);
@@ -52,6 +68,11 @@ public class ExameTeoricoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um Exame Teórico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame Teórico editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Exame Teórico")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody ExameTeoricoDTO dto) {
         if (!service.getExameTeoricoById(id).isPresent()) {
             return new ResponseEntity("Exame teórico não encontrado", HttpStatus.NOT_FOUND);
@@ -67,6 +88,11 @@ public class ExameTeoricoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um Exame Teórico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame Teórico deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o Examte Teórico")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ExameTeorico> exameTeorico = service.getExameTeoricoById(id);
         if (!exameTeorico.isPresent()) {

@@ -8,6 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pedro.joao.scfcapi.service.CategoriaService;
 
 import java.util.List;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/categorias")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class CategoriaController {
     
@@ -30,6 +36,11 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma Categoria")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Categoria encontrada"),
+            @ApiResponse(code = 404, message = "Categoria não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if(!categoria.isPresent()) {
@@ -39,6 +50,11 @@ public class CategoriaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova Categoria")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Categoria salva com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar a Categoria")
+    })
     public ResponseEntity post(@RequestBody CategoriaDTO dto) {
         try {
             Categoria categoria = converter(dto);
@@ -50,6 +66,11 @@ public class CategoriaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de uma Categoria")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Categoria editada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar a Categoria")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody CategoriaDTO dto) {
         if (!service.getCategoriaById(id).isPresent()) {
             return new ResponseEntity("Categoria não encontrada", HttpStatus.NOT_FOUND);
@@ -65,6 +86,11 @@ public class CategoriaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta uma Categoria")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Categoria deletada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar a Categoria")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Categoria> categoria = service.getCategoriaById(id);
         if (!categoria.isPresent()) {

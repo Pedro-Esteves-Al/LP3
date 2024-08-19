@@ -4,6 +4,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import pedro.joao.scfcapi.api.dto.AlunoSimuladoDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/alunosSimulados")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class AlunoSimuladoController {
     private final AlunoSimuladoService service;
@@ -33,6 +39,11 @@ public class AlunoSimuladoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um aluno e um simulado que ele participa ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Simulado encontrado"),
+            @ApiResponse(code = 404, message = "Aluno/Simulado não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<AlunoSimulado> alunoSimulado = service.getAlunoSimuladoById(id);
         if(!alunoSimulado.isPresent()) {
@@ -42,6 +53,11 @@ public class AlunoSimuladoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva a participação de um aluno no simulado ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Simulado salva com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao salvar Aluno/Simulado")
+    })
     public ResponseEntity post(@RequestBody AlunoSimuladoDTO dto) {
         try {
             AlunoSimulado alunoSimulado = converter(dto);
@@ -53,6 +69,11 @@ public class AlunoSimuladoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita a participação de um aluno em um simulado ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Simulado editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar Aluno/Simulado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AlunoSimuladoDTO dto) {
         if (!service.getAlunoSimuladoById(id).isPresent()) {
             return new ResponseEntity("Aluno ou Simulado não encontrado", HttpStatus.NOT_FOUND);
@@ -68,6 +89,11 @@ public class AlunoSimuladoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta a participação de um aluno em um simulado ")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aluno/Simulado deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar Aluno/Simulado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AlunoSimulado> alunoSimulado = service.getAlunoSimuladoById(id);
         if (!alunoSimulado.isPresent()) {

@@ -14,6 +14,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/veiculos")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class VeiculoController {
     private final VeiculoService service;
@@ -35,6 +41,11 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Veículo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Veículo encontrado"),
+            @ApiResponse(code = 404, message = "Veículo não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if(!veiculo.isPresent()) {
@@ -44,6 +55,11 @@ public class VeiculoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Veículo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Veículo salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Veículo")
+    })
     public ResponseEntity post(@RequestBody VeiculoDTO dto) {
         try {
             Veiculo veiculo = converter(dto);
@@ -55,6 +71,11 @@ public class VeiculoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um Veículo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Veículo editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Veículo")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody VeiculoDTO dto) {
         if (!service.getVeiculoById(id).isPresent()) {
             return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
@@ -70,6 +91,11 @@ public class VeiculoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um Veículo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Veículo deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o Veículo")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if (!veiculo.isPresent()) {

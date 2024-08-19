@@ -8,6 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pedro.joao.scfcapi.service.SimuladoService;
 
 import java.util.List;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/simulados")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class SimuladoController {
 
@@ -30,6 +36,11 @@ public class SimuladoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Simulado")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Simulado encontrado"),
+            @ApiResponse(code = 404, message = "Simulado não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Simulado> simulado = service.getSimuladoById(id);
         if(!simulado.isPresent()) {
@@ -39,6 +50,11 @@ public class SimuladoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Simulado")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Simulado salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Simulado")
+    })
     public ResponseEntity post(@RequestBody SimuladoDTO dto) {
         try {
             Simulado simulado = converter(dto);
@@ -50,6 +66,11 @@ public class SimuladoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um Simulado")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Simulado editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Simulado")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody SimuladoDTO dto) {
         if (!service.getSimuladoById(id).isPresent()) {
             return new ResponseEntity("Simulado não encontrado", HttpStatus.NOT_FOUND);
@@ -65,6 +86,11 @@ public class SimuladoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um Simulado")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Simulado deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o Simulado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Simulado> simulado = service.getSimuladoById(id);
         if (!simulado.isPresent()) {

@@ -8,6 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import pedro.joao.scfcapi.service.InstrutorService;
 
 import java.util.List;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/instrutores")
 @RequiredArgsConstructor
 @CrossOrigin
+@Api("API de Cursos")
 
 public class InstrutorController {
 
@@ -30,6 +36,11 @@ public class InstrutorController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Instrutor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Instrutor encontrado"),
+            @ApiResponse(code = 404, message = "Instrutor não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id")Long id) {
         Optional<Instrutor> instrutor = service.getInstrutorById(id);
         if(!instrutor.isPresent()) {
@@ -39,6 +50,11 @@ public class InstrutorController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo Instrutor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Instrutor salvo com sucesso"),
+            @ApiResponse(code = 404, message = "erro ao salvar o Instrutor")
+    })
     public ResponseEntity post(@RequestBody InstrutorDTO dto) {
         try {
             Instrutor instrutor = converter(dto);
@@ -50,6 +66,11 @@ public class InstrutorController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Edita as informações de um Instrutor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Instrutor editado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao editar o Instrutor")
+    })
     public ResponseEntity atualizar (@PathVariable("id") Long id, @RequestBody InstrutorDTO dto) {
         if (!service.getInstrutorById(id).isPresent()) {
             return new ResponseEntity("Instrutor não encontrado", HttpStatus.NOT_FOUND);
@@ -65,6 +86,11 @@ public class InstrutorController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deleta um Instrutor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Instrutor deletado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao deletar o Instrutor")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Instrutor> instrutor = service.getInstrutorById(id);
         if (!instrutor.isPresent()) {

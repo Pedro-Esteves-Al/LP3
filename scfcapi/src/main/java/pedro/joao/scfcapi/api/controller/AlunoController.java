@@ -35,7 +35,7 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("Obter detalhes de um aluno")
+    @ApiOperation("Obter detalhes de um Aluno")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aluno encontrado"),
             @ApiResponse(code = 404, message = "Aluno não encontrado")
@@ -52,7 +52,7 @@ public class AlunoController {
     @ApiOperation("Salva um novo Aluno")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aluno salvo com sucesso"),
-            @ApiResponse(code = 404, message = "erro ao salvar o aluno")
+            @ApiResponse(code = 404, message = "erro ao salvar o Aluno")
     })
     public ResponseEntity post(@RequestBody AlunoDTO dto) {
         try {
@@ -65,10 +65,10 @@ public class AlunoController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation("Edita as informações de um aluno")
+    @ApiOperation("Edita as informações de um Aluno")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aluno editado com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao editar o aluno")
+            @ApiResponse(code = 404, message = "Erro ao editar o Aluno")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody AlunoDTO dto) {
         if(!service.getAlunoById(id).isPresent()) {
@@ -85,10 +85,10 @@ public class AlunoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Deleta um aluno")
+    @ApiOperation("Deleta um Aluno")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aluno deletado com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao deletar o aluno")
+            @ApiResponse(code = 404, message = "Erro ao deletar o Aluno")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Aluno> aluno = service.getAlunoById(id);

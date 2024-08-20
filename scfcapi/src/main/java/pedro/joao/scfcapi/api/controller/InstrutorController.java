@@ -30,6 +30,11 @@ public class InstrutorController {
     private final InstrutorService service;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Instrutores cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Instrutor> instrutores = service.getInstrutors();
         return ResponseEntity.ok(instrutores.stream().map(InstrutorDTO::create).collect(Collectors.toList()));

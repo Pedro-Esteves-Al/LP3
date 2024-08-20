@@ -34,6 +34,11 @@ public class AulaPraticaController {
     private final CategoriaService categoriaService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todas as Aulas Práticas cadastradas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<AulaPratica> aulaPraticas = service.getAulaPraticas();
         return ResponseEntity.ok(aulaPraticas.stream().map(AulaPraticaDTO::create).collect(Collectors.toList()));

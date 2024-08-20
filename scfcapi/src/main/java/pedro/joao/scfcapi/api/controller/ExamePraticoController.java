@@ -32,6 +32,11 @@ public class ExamePraticoController {
     public final CategoriaService categoriaService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Exames práticos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<ExamePratico> examePraticos = service.getExamePraticos();
         return ResponseEntity.ok(examePraticos.stream().map(ExamePraticoDTO::create).collect(Collectors.toList()));

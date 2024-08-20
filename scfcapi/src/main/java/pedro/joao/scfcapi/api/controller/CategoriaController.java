@@ -30,10 +30,16 @@ public class CategoriaController {
     private final CategoriaService service;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todas as Categorias cadastradas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Categoria> categorias = service.getCategorias();
         return ResponseEntity.ok(categorias.stream().map(CategoriaDTO::create).collect(Collectors.toList()));
     }
+
 
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma Categoria")
@@ -84,6 +90,7 @@ public class CategoriaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @DeleteMapping("{id}")
     @ApiOperation("Deleta uma Categoria")

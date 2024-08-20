@@ -32,6 +32,11 @@ public class ExameTeoricoController {
     private final CategoriaService categoriaService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Exames Teóricos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<ExameTeorico> examesTeoricos = service.getExameTeoricos();
         return ResponseEntity.ok(examesTeoricos.stream().map(ExameTeoricoDTO::create).collect(Collectors.toList()));

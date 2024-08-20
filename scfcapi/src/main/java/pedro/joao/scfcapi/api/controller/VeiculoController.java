@@ -35,6 +35,11 @@ public class VeiculoController {
     private final InstrutorService instrutorService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Veículos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Veiculo> veiculos = service.getVeiculos();
         return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));

@@ -32,6 +32,11 @@ public class AulaTeoricaController {
     private final InstrutorService instrutorService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todas as Aulas Teóricas cadastradas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<AulaTeorica> aulaTeoricas = service.getAulaTeoricas();
         return ResponseEntity.ok(aulaTeoricas.stream().map(AulaTeoricaDTO::create).collect(Collectors.toList()));

@@ -35,6 +35,11 @@ public class ContratoController {
     private final CategoriaService categoriaService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Contratos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Contrato> contratos = service.getContratos();
         return ResponseEntity.ok(contratos.stream().map(ContratoDTO::create).collect(Collectors.toList()));

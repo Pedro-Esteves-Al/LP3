@@ -29,6 +29,11 @@ public class AlunoController {
     private final AlunoService service;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Alunos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Aluno> alunos = service.getAlunos();
         return ResponseEntity.ok(alunos.stream().map(AlunoDTO::create).collect(Collectors.toList()));

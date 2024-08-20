@@ -36,6 +36,11 @@ public class AlunoExamePraticoController {
     public final AlunoService alunoService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Alunos relacionados a Exames Práticos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<AlunoExamePratico> alunoExamePraticos = service.getAlunoExamePratico();
         return ResponseEntity.ok(alunoExamePraticos.stream().map(AlunoExamePraticoDTO::create).collect(Collectors.toList()));

@@ -33,6 +33,11 @@ public class AlunoSimuladoController {
     private final SimuladoService simuladoService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Alunos relacionados a Simulados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<AlunoSimulado> alunoSimulados = service.getAlunoSimulado();
         return ResponseEntity.ok(alunoSimulados.stream().map(AlunoSimuladoDTO::create).collect(Collectors.toList()));

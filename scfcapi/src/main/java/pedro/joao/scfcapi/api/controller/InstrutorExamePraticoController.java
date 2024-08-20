@@ -36,6 +36,11 @@ public class InstrutorExamePraticoController {
     private final ExamePraticoService examePraticoService;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Instrutores relacionados a Exames Práticos cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<InstrutorExamePratico> instrutorExamePraticos = service.getInstrutorExamePratico();
         return ResponseEntity.ok(instrutorExamePraticos.stream().map(InstrutorExamePraticoDTO::create).collect(Collectors.toList()));

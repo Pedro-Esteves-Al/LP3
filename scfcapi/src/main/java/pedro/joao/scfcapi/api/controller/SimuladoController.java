@@ -30,6 +30,11 @@ public class SimuladoController {
     private final SimuladoService service;
 
     @GetMapping()
+    @ApiOperation("Obter a lista de todos os Simulados cadastrados")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista encontrada"),
+            @ApiResponse(code = 404, message = "Lista não encontrada")
+    })
     public ResponseEntity get() {
         List<Simulado> simulados = service.getSimulados();
         return ResponseEntity.ok(simulados.stream().map(SimuladoDTO::create).collect(Collectors.toList()));

@@ -28,7 +28,7 @@ import pedro.joao.scfcapi.service.AulaTeoricaService;
 @RequestMapping("/api/v1/alunosAulasTeoricas")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Relação de Alunos com aula teóricas")
 
 public class AlunoAulaTeoricaController {
     private final AlunoAulaTeoricaService service;

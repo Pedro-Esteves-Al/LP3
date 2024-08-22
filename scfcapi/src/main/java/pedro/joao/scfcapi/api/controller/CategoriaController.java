@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/categorias")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Categorias")
 
 public class CategoriaController {
     

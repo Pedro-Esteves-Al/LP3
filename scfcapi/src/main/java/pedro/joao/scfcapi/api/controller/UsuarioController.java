@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pedro.joao.scfcapi.api.dto.UsuarioDTO;
 import pedro.joao.scfcapi.exception.RegraNegocioException;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class UsuarioController {
 
     private final UsuarioService service;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping()
     @ApiOperation("Obter a lista de todos os usuários cadastrados")
@@ -54,7 +56,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario.map(UsuarioDTO::create));
     }
 
-    @PostMapping()
+    /*@PostMapping()
     @ApiOperation("Salva um novo Usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário salvo com sucesso"),
@@ -68,9 +70,29 @@ public class UsuarioController {
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }*/
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody UsuarioDTO dto) {
+        try {
+            if (dto.getSenha() == null || dto.getSenha().trim().equals("") ||
+                    dto.getSenhaRepeticao() == null || dto.getSenhaRepeticao().trim().equals("")) {
+                return ResponseEntity.badRequest().body("Senha inválida");
+            }
+            if (!dto.getSenha().equals(dto.getSenhaRepeticao())) {
+                return ResponseEntity.badRequest().body("Senhas não conferem");
+            }
+            Usuario usuario = converter(dto);
+            String senhaCriptografada = passwordEncoder.encode(dto.getSenha());
+            usuario.setSenha(senhaCriptografada);
+            usuario = service.salvar(usuario);
+            return new ResponseEntity(usuario, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @PutMapping("{id}")
+    /*@PutMapping("{id}")
     @ApiOperation("Edita as informações de um Usuário")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Usuário editado com sucesso"),
@@ -81,6 +103,28 @@ public class UsuarioController {
             return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
+            Usuario usuario = converter(dto);
+            usuario.setId(id);
+            service.salvar(usuario);
+            return ResponseEntity.ok(usuario);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }*/
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UsuarioDTO dto) {
+        if (!service.getUsuarioById(id).isPresent()) {
+            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            if (dto.getSenha() == null || dto.getSenha().trim().equals("") ||
+                    dto.getSenhaRepeticao() == null || dto.getSenhaRepeticao().trim().equals("")) {
+                return ResponseEntity.badRequest().body("Senha inválida");
+            }
+            if (!dto.getSenha().equals(dto.getSenhaRepeticao())) {
+                return ResponseEntity.badRequest().body("Senhas não conferem");
+            }
             Usuario usuario = converter(dto);
             usuario.setId(id);
             service.salvar(usuario);

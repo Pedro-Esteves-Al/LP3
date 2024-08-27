@@ -19,7 +19,6 @@ public class AlunoExameTeoricoDTO {
     private LocalDate dataExameTeorico;
     private LocalTime horarioExameTeorico;
     private String localExameTeorico;
-    private String tipoCategoria;
     private String nomeAluno;
     private boolean aprovado;
 
@@ -30,7 +29,6 @@ public class AlunoExameTeoricoDTO {
         dto.nomeAluno = alunoExameTeorico.getAluno().getNome();
         dto.dataExameTeorico = alunoExameTeorico.getExameTeorico().getDataExameTeorico();
         dto.horarioExameTeorico = alunoExameTeorico.getExameTeorico().getHorarioExameTeorico();
-       // dto.tipoCategoria = alunoExameTeorico.getExameTeorico().getCategoria().getTipo();
         return dto;
     }
 }

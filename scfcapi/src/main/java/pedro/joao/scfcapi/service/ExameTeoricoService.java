@@ -31,9 +31,6 @@ public class ExameTeoricoService {
     }
 
     public void validar(ExameTeorico exameTeorico) {
-        /*if (exameTeorico.getCategoria() == null) {
-            throw new RegraNegocioException("Categoria Inválida");
-        }*/
         if (exameTeorico.getDataExameTeorico() == null) {
             throw new RegraNegocioException("Data Inválida");
         }

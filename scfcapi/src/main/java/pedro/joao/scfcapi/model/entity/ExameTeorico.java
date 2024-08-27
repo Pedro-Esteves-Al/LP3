@@ -20,7 +20,4 @@ public class ExameTeorico {
     private LocalDate dataExameTeorico;
     private LocalTime horarioExameTeorico;
     private String localExameTeorico;
-
-    /*@ManyToOne
-    private Categoria categoria;*/
 }

@@ -18,13 +18,10 @@ public class ExameTeoricoDTO {
     private LocalDate dataExameTeorico;
     private LocalTime horarioExameTeorico;
     private String localExameTeorico;
-    /*private Long idCategoria;
-    private String tipoCategoria;*/
 
     public static ExameTeoricoDTO create(ExameTeorico exameTeorico) {
         ModelMapper modelMapper = new ModelMapper();
         ExameTeoricoDTO dto = modelMapper.map(exameTeorico, ExameTeoricoDTO.class);
-       // dto.tipoCategoria = exameTeorico.getCategoria().getTipo();
         return dto;
     }
 }

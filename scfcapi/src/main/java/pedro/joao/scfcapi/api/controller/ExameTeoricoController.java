@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 public class ExameTeoricoController {
     private final ExameTeoricoService service;
-    private final CategoriaService categoriaService;
 
     @GetMapping()
     @ApiOperation("Obter a lista de todos os Exames Teóricos cadastrados")
@@ -114,14 +113,6 @@ public class ExameTeoricoController {
     public ExameTeorico converter(ExameTeoricoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ExameTeorico exameTeorico = modelMapper.map(dto, ExameTeorico.class);
-        /*if (dto.getIdCategoria() != null) {
-            Optional<Categoria> cateogria = categoriaService.getCategoriaById(dto.getIdCategoria());
-            if (!cateogria.isPresent()) {
-                exameTeorico.setCategoria(null);
-            } else {
-                exameTeorico.setCategoria(cateogria.get());
-            }
-        }*/
         return exameTeorico;
     }
 }

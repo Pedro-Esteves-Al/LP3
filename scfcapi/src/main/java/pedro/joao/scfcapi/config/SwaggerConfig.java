@@ -5,13 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.spi.service.contexts.SecurityContext;
+
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 @Configuration
 @EnableSwagger2
@@ -26,8 +31,8 @@ public class SwaggerConfig {
                         .basePackage("pedro.joao.scfcapi.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
-                //.securityContexts(Arrays.asList(securityContext()))
-                //.securitySchemes(Arrays.asList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
                 .apiInfo(apiInfo());
     }
 
@@ -40,15 +45,6 @@ public class SwaggerConfig {
                 .build();
     }
 
-   /* private String contact() {
-        ArrayList<Contact> contatos = new ArrayList<Contact>();
-        Contact pedro = new Contact("Pedro Esteves"
-                , "https://github.com/Pedro-Esteves-Al",
-                "pedroestevesa@gmail.com");
-        contatos.add(pedro);
-        return contatos.toString();
-    }*/
-
     private Contact contact(){
         return new Contact("Pedro Esteves/ João Vitor Pacheco"
                 , "https://github.com/Pedro-Esteves-Al/LP3",
@@ -56,7 +52,7 @@ public class SwaggerConfig {
     }
 
 
- /*   public ApiKey apiKey(){
+    public ApiKey apiKey(){
         return new ApiKey("JWT", "Authorization", "header");
     }
 
@@ -76,6 +72,6 @@ public class SwaggerConfig {
         List<SecurityReference> auths = new ArrayList<>();
         auths.add(reference);
         return auths;
-    }*/
+    }
 
 }

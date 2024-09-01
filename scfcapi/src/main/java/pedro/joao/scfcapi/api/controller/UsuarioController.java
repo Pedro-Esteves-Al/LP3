@@ -64,7 +64,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario.map(UsuarioDTO::create));
     }
 
-    /*@PostMapping()
+    @PostMapping()
     public ResponseEntity post(@RequestBody UsuarioDTO dto) {
         try {
             if (dto.getSenha() == null || dto.getSenha().trim().equals("") ||
@@ -77,13 +77,22 @@ public class UsuarioController {
             Usuario usuario = converter(dto);
             String senhaCriptografada = passwordEncoder.encode(dto.getSenha());
             usuario.setSenha(senhaCriptografada);
-            usuario = service.salvar(usuario);
+            usuario = usuarioService.salvar(usuario);
             return new ResponseEntity(usuario, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    /*@PostMapping //versão do marco antonio, deixa possível colocar uma senha de repeticao diferente (errado)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Usuario salvar(@RequestBody Usuario usuario ){
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+        return usuarioService.salvar(usuario);
+    }*/
+
+    /*
     @PostMapping("/auth")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
@@ -98,13 +107,6 @@ public class UsuarioController {
         }
     }*/
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Usuario salvar(@RequestBody Usuario usuario ){
-        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
-        usuario.setSenha(senhaCriptografada);
-        return usuarioService.salvar(usuario);
-    }
 
     @PostMapping("/auth")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){

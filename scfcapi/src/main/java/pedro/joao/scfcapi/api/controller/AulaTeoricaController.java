@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/aulasTeoricas")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Aulas Teóricas")
 
 public class AulaTeoricaController {
     private final AulaTeoricaService service;

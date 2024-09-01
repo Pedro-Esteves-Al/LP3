@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/veiculos")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Veículos")
 
 public class VeiculoController {
     private final VeiculoService service;

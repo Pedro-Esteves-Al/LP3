@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/examesPraticos")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Exames práticos")
 
 public class ExamePraticoController {
     public final ExamePraticoService service;

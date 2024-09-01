@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/alunos")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de Alunos")
 
 public class AlunoController {
 

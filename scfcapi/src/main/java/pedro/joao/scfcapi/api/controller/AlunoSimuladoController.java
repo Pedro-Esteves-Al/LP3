@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/alunosSimulados")
 @RequiredArgsConstructor
 @CrossOrigin
-@Api("API de Cursos")
+@Api("API de relação de Alunos com Simulados")
 
 public class AlunoSimuladoController {
     private final AlunoSimuladoService service;

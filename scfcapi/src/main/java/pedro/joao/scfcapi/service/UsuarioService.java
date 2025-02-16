@@ -89,8 +89,5 @@ public class UsuarioService implements UserDetailsService {
         if (usuario.getSenha() == null || usuario.getSenha().trim().equals("")) {
             throw new RegraNegocioException("senha inválida");
         }
-       /* if (usuario.getAdmin() == null) {
-            throw new RegraNegocioException("cpf inválido");
-        }*/
     }
 }

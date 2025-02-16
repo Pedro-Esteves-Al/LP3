@@ -107,6 +107,7 @@ class VeiculoServiceTest {
         Veiculo veiculo = new Veiculo();
         veiculo.setId(1L); // Necessário para a exclusão funcionar
 
+        //o doNothing é pra evitar conflitos entre o mock e o resto do negócio.
         doNothing().when(veiculoRepository).delete(veiculo);
 
         assertDoesNotThrow(() -> veiculoService.excluir(veiculo));

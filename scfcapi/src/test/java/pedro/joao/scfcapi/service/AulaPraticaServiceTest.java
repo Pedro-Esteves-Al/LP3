@@ -38,12 +38,12 @@ class AulaPraticaServiceTest {
     @BeforeEach
     void setUp() {
         aulaPratica = new AulaPratica();
-        aulaPratica.setAluno(new Aluno()); // Simula um aluno válido
-        aulaPratica.setInstrutor(new Instrutor()); // Simula um instrutor válido
-        aulaPratica.setVeiculo(new Veiculo()); // Simula um veículo válido
+        aulaPratica.setAluno(new Aluno());
+        aulaPratica.setInstrutor(new Instrutor());
+        aulaPratica.setVeiculo(new Veiculo());
         aulaPratica.setDataAulaPratica(LocalDate.now());
         aulaPratica.setHorarioAulaPratica(LocalTime.now());
-        aulaPratica.setCategoria(new Categoria()); // Simula uma categoria válida
+        aulaPratica.setCategoria(new Categoria());
     }
 
     @Test
@@ -111,6 +111,7 @@ class AulaPraticaServiceTest {
         AulaPratica aulaPratica = new AulaPratica();
         aulaPratica.setId(1L); // Necessário para a exclusão funcionar
 
+        //o doNothing é pra evitar conflitos entre o mock e o resto do negócio.
         doNothing().when(aulaPraticaRepository).delete(aulaPratica);
 
         assertDoesNotThrow(() -> aulaPraticaService.excluir(aulaPratica));

@@ -200,6 +200,7 @@ class AlunoServiceTest {
         Aluno aluno = new Aluno();
         aluno.setId(1L); // Necessário para a exclusão funcionar
 
+        //o doNothing é pra evitar conflitos entre o mock e o resto do negócio.
         doNothing().when(alunoRepository).delete(aluno);
 
         assertDoesNotThrow(() -> alunoService.excluir(aluno));

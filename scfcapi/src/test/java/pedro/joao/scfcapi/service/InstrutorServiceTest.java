@@ -76,7 +76,7 @@ class InstrutorServiceTest {
         Instrutor instrutor = new Instrutor();
         instrutor.setId(1L); // Necessário para a exclusão funcionar
 
-        //o doNothing é usado para evitar conflitos entre o mock e a aplicação.
+        //o doNothing é pra evitar conflitos entre o mock e o resto do negócio.
         doNothing().when(instrutorRepository).delete(instrutor);
 
         assertDoesNotThrow(() -> instrutorService.excluir(instrutor));

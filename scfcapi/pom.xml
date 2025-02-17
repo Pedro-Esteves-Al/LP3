@@ -18,12 +18,28 @@
 	</properties>
 	<dependencies>
 
-<!--		<dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.11.4</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!--		<dependency>-->
 <!--			<groupId>org.junit.jupiter</groupId>-->
 <!--			<artifactId>junit-jupiter-engine</artifactId>-->
 <!--			<version>5.5.2</version>-->
 <!--			<scope>test</scope>-->
 <!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.28.1</version>
+		</dependency>
 
 
 		<dependency>
